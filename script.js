@@ -10,7 +10,7 @@ let fabricatorCount = 0;
 let fabricatorBaseCost = 75;
 let fabricatorCost = fabricatorBaseCost;
 let productionInterval = 1000; // Normal production interval (1 second)
-let fastForwardMultiplier = 10; // How much faster the game runs when fast forward is active
+let fastForwardMultiplier = 25; // How much faster the game runs when fast forward is active
 let isFastForwarding = false;
 let productionLoop; // Variable to hold the interval
 
@@ -19,6 +19,7 @@ function updateUI() {
     creditsDisplay.textContent = `Credits: ${credits}`;
     buyFabricatorButton.textContent = `Buy Shape Fabricator (Cost: ${fabricatorCost})`;
     fabricatorsDisplay.textContent = `Shape Fabricators: ${fabricatorCount}`;
+    fastForwardButton.textContent = isFastForwarding ? `Fast Forward (On)` : `Fast Forward (Off)`;
 }
 
 // Function to handle buying a Shape Fabricator
@@ -31,38 +32,30 @@ function buyFabricator() {
     }
 }
 
-// Event listeners for the buy button
-buyFabricatorButton.addEventListener('click', buyFabricator);
+// Function to toggle fast forward
+function toggleFastForward() {
+    isFastForwarding = !isFastForwarding;
+    clearInterval(productionLoop); // Clear the existing interval
 
-// Event listeners for the Fast Forward button (using mousedown and mouseup)
-fastForwardButton.addEventListener('mousedown', () => {
-    isFastForwarding = true;
-    clearInterval(productionLoop); // Clear the normal interval
-    productionLoop = setInterval(() => {
-        credits += fabricatorCount * fastForwardMultiplier;
-        updateUI();
-    }, productionInterval / fastForwardMultiplier); // Run much faster
-});
-
-fastForwardButton.addEventListener('mouseup', () => {
-    isFastForwarding = false;
-    clearInterval(productionLoop); // Clear the fast interval
-    productionLoop = setInterval(() => {
-        credits += fabricatorCount;
-        updateUI();
-    }, productionInterval); // Resume normal speed
-});
-
-fastForwardButton.addEventListener('mouseleave', () => {
     if (isFastForwarding) {
-        isFastForwarding = false;
-        clearInterval(productionLoop); // Clear the fast interval
+        productionLoop = setInterval(() => {
+            credits += fabricatorCount * fastForwardMultiplier;
+            updateUI();
+        }, productionInterval / fastForwardMultiplier); // Run much faster
+    } else {
         productionLoop = setInterval(() => {
             credits += fabricatorCount;
             updateUI();
         }, productionInterval); // Resume normal speed
     }
-});
+    updateUI(); // Update the button text
+}
+
+// Event listener for the buy button
+buyFabricatorButton.addEventListener('click', buyFabricator);
+
+// Event listener for the Fast Forward button (now a toggle)
+fastForwardButton.addEventListener('click', toggleFastForward);
 
 // Initial UI update
 updateUI();
