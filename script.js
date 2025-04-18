@@ -2,7 +2,7 @@
 const creditsDisplay = document.getElementById('credits');
 const buyFabricatorButton = document.getElementById('buy-fabricator');
 const fastForwardButton = document.getElementById('fast-forward');
-const fabricatorsDisplay = document.getElementById('fabricators');
+const fabricatorList = document.getElementById('fabricator-list');
 
 // Game state variables
 let credits = 100;
@@ -18,8 +18,18 @@ let productionLoop; // Variable to hold the interval
 function updateUI() {
     creditsDisplay.textContent = `Credits: ${credits}`;
     buyFabricatorButton.textContent = `Buy Shape Fabricator (Cost: ${fabricatorCost})`;
-    fabricatorsDisplay.textContent = `Shape Fabricators: ${fabricatorCount}`;
     fastForwardButton.textContent = isFastForwarding ? `Fast Forward (On)` : `Fast Forward (Off)`;
+
+    // Update the visual fabricator list
+    fabricatorList.innerHTML = ''; // Clear the previous list
+    for (let i = 0; i < fabricatorCount; i++) {
+        const bar = document.createElement('div');
+        bar.classList.add('fabricator-bar');
+        const square = document.createElement('div');
+        square.classList.add('fabricator-square');
+        bar.appendChild(square);
+        fabricatorList.appendChild(bar);
+    }
 }
 
 // Function to handle buying a Shape Fabricator
@@ -48,7 +58,7 @@ function toggleFastForward() {
             updateUI();
         }, productionInterval); // Resume normal speed
     }
-    updateUI(); // Update the button text
+    updateUI(); // Update the button text and fabricator list
 }
 
 // Event listener for the buy button
