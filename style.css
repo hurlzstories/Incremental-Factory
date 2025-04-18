@@ -14,6 +14,9 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    flex-direction: column; /* Arrange elements vertically */
+    align-items: center;
 }
 
 button {
@@ -23,10 +26,33 @@ button {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #eee;
-    margin-top: 10px; /* Add some space between buttons */
+    margin-top: 10px;
 }
 
 button:hover {
     background-color: #ddd;
 }
- 
+
+#fabricator-list {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* Arrange bars vertically */
+    align-items: center; /* Center the squares within the bars */
+}
+
+.fabricator-bar {
+    width: 50px;
+    height: 20px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fabricator-square {
+    width: 10px;
+    height: 10px;
+    background-color: #333; /* Solid square color */
+}
