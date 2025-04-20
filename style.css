@@ -6,7 +6,7 @@ body {
     min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
-    padding-top: 60px; /* Space for header */
+    /* Remove padding-top here */
 }
 
 header {
@@ -37,7 +37,7 @@ header #credits {
 
 aside#side-panel {
     position: fixed;
-    top: 80px; /* Below the header */
+    top: 60px; /* Below the header */
     left: 0;
     background-color: #fefefe;
     padding: 20px;
@@ -47,7 +47,7 @@ aside#side-panel {
     z-index: 15;
     text-align: left; /* Align text within the panel */
     width: 180px;
-    height: calc(100vh - 100px); /* Adjust height to fit screen */
+    height: calc(100vh - 80px); /* Adjust height to fit screen below header */
     display: flex;
     flex-direction: column;
 }
@@ -181,6 +181,7 @@ aside#side-panel button#fast-forward-button-fixed {
     margin-left: 200px; /* Space for side panel */
     padding: 20px;
     gap: 20px; /* Spacing between machines */
+    flex-grow: 1; /* Take up remaining width */
 }
 
 .main-content .machine-container {
