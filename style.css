@@ -25,7 +25,7 @@ h1 {
 aside#side-panel {
     position: fixed;
     top: 60px; /* Below the fixed title */
-    left: 10px;
+    left: 0; /* Flush with the left edge */
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
@@ -65,7 +65,7 @@ aside#side-panel button:hover {
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Center items horizontally */
     margin-left: 200px; /* Adjust to make space for the side panel */
 }
 
@@ -73,7 +73,7 @@ aside#side-panel button:hover {
     margin-top: 80px; /* Adjust for fixed title */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Center machine */
 }
 
 /* ... the rest of your CSS ... */
@@ -90,10 +90,8 @@ aside#side-panel button:hover {
     z-index: 15; /* Above side panel */
 }
 
-#upgrade-button-fixed {
-    top: 80px;
-}
+/* Removed #upgrade-button-fixed */
 
 #fast-forward-button-fixed {
-    top: 130px;
+    top: 80px; /* Adjust vertical position */
 }
