@@ -1,10 +1,7 @@
 const buyButton = document.querySelector('.buy-button');
-const upgradePanel = document.getElementById('upgrade-panel');
-const chooseSpeedUpgradeButton = document.getElementById('choose-speed-upgrade');
-const chooseProductionUpgradeButton = document.getElementById('choose-production-upgrade');
 const creditsDisplay = document.getElementById('credits');
-const upgradeMenuButton = document.getElementById('upgrade-menu-button');
-const fastForwardButton = document.getElementById('fast-forward');
+const upgradeButtonFixed = document.getElementById('upgrade-button-fixed');
+const fastForwardButtonFixed = document.getElementById('fast-forward-button-fixed');
 const shapeIndicator = document.querySelector('.shape-indicator');
 const triangleIcon = document.querySelector('.triangle-icon');
 const circleIcon = document.querySelector('.circle-icon');
@@ -12,59 +9,45 @@ const topSection = document.querySelector('.top-section');
 
 let credits = 100;
 let machinePurchased = false;
-let firstUpgradeChosen = null;
-const firstMachineCost = 50; // Example cost
+let productionInterval = 1000; // 1 credit per second per machine
+let productionLoop;
+const firstMachineCost = 50;
 
 function updateUI() {
     creditsDisplay.textContent = `Credits: ${credits}`;
 
     if (machinePurchased) {
-        buyButton.style.display = 'none'; // Hide buy button after purchase
-        shapeIndicator.style.display = 'block'; // Show shape indicator
-        upgradePanel.classList.remove('hidden'); // Show upgrade panel
+        buyButton.style.display = 'none';
+        shapeIndicator.style.display = 'block';
     } else {
         buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
-        shapeIndicator.style.display = 'none'; // Hide initially
-        upgradePanel.classList.add('hidden'); // Hide upgrade panel
+        shapeIndicator.style.display = 'none';
     }
 
-    if (firstUpgradeChosen === 'speed') {
-        triangleIcon.style.display = 'block';
-        topSection.justifyContent = 'flex-start';
-    } else if (firstUpgradeChosen === 'production') {
-        circleIcon.style.display = 'block';
-        topSection.justifyContent = 'flex-start';
-    }
-
-    creditsDisplay.classList.toggle('hidden', !machinePurchased);
-    upgradeMenuButton.classList.toggle('hidden', !machinePurchased || firstUpgradeChosen === null);
-    fastForwardButton.classList.toggle('hidden', !machinePurchased);
+    // Upgrade icon visibility will be handled later
 }
 
 function buyFirstMachine() {
     if (credits >= firstMachineCost && !machinePurchased) {
         credits -= firstMachineCost;
         machinePurchased = true;
+        startProduction();
         updateUI();
     }
 }
 
-function chooseSpeedUpgrade() {
-    firstUpgradeChosen = 'speed';
-    upgradePanel.classList.add('hidden'); // Hide panel after choice
-    updateUI();
-}
-
-function chooseProductionUpgrade() {
-    firstUpgradeChosen = 'production';
-    upgradePanel.classList.add('hidden'); // Hide panel after choice
-    updateUI();
+function startProduction() {
+    if (machinePurchased) {
+        productionLoop = setInterval(() => {
+            credits++;
+            updateUI();
+        }, productionInterval);
+    }
 }
 
 // Event listeners
 buyButton.addEventListener('click', buyFirstMachine);
-chooseSpeedUpgradeButton.addEventListener('click', chooseSpeedUpgrade);
-chooseProductionUpgradeButton.addEventListener('click', chooseProductionUpgrade);
+// We'll add event listeners for the fixed upgrade and fast forward buttons later
 
 // Initial UI update
 updateUI();
