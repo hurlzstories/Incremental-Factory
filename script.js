@@ -1,6 +1,6 @@
 const buyButton = document.querySelector('.buy-button'); // We might not need this reference anymore
 const creditsDisplay = document.getElementById('credits');
-const fastForwardButtonFixed = document.getElementById('fast-forward-button-fixed');
+const timeWarpButton = document.getElementById('time-warp-button'); // Renamed button reference
 const shapeIndicator = document.querySelector('.shape-indicator');
 const triangleIcon = document.querySelector('.triangle-icon');
 const circleIcon = document.querySelector('.circle-icon');
@@ -27,8 +27,8 @@ let additionalMachineCost = 300; // Initial value for the second machine
 // const productionUpgradeCost = 150; // No longer global
 let hasSpeedUpgrade = false; // May not be needed
 let hasProductionUpgrade = false; // May not be needed
-let isFastForwardActive = false;
-const fastForwardMultiplier = 500; // How much faster the game runs
+// let isFastForwardActive = false; // No longer needed
+const fastForwardMultiplier = 2; // No longer directly used
 const machineUpgrades = {}; // Object to store upgrades for each machine
 
 function updateUI() {
@@ -130,7 +130,6 @@ function renderMachines() {
 function startProduction() {
     clearInterval(productionLoop); // Clear any existing interval
     if (machineCount > 0) {
-        const interval = isFastForwardActive ? productionInterval / fastForwardMultiplier : productionInterval;
         productionLoop = setInterval(() => {
             let totalCreditsEarned = 0;
             for (let i = 1; i <= machineCount; i++) {
@@ -142,14 +141,27 @@ function startProduction() {
             }
             credits += totalCreditsEarned;
             updateUI();
-        }, interval);
+        }, productionInterval); // Keep the regular production interval
     }
 }
 
-function handleFastForwardButtonClick() {
-    isFastForwardActive = !isFastForwardActive;
-    startProduction(); // Restart production with the new interval
-    updateUI();
+function handleTimeWarpButtonClick() {
+    if (machineCount > 0) {
+        const fourHoursInMilliseconds = 4 * 60 * 60 * 1000;
+        const productionRatePerInterval = 1; // Base production per machine per interval
+        let totalCreditsEarned = 0;
+
+        for (let i = 1; i <= machineCount; i++) {
+            let productionMultiplier = 1;
+            if (machineUpgrades[i].production) {
+                productionMultiplier = 1.25;
+            }
+            const creditsPerMachine = (fourHoursInMilliseconds / productionInterval) * productionRatePerInterval * productionMultiplier;
+            totalCreditsEarned += creditsPerMachine;
+        }
+        credits += Math.floor(totalCreditsEarned); // Add the accumulated credits
+        updateUI();
+    }
 }
 
 function handlePurchaseMachineButtonClick() {
@@ -166,8 +178,9 @@ function handleIndividualSpeedUpgrade(event) {
     if (credits >= upgradeCost && !machineUpgrades[machineId].speed) {
         credits -= upgradeCost;
         machineUpgrades[machineId].speed = true;
-        productionInterval *= 0.8; // Global speed increase for all machines
+        productionInterval *= 0.8; // Global speed increase - consider making this per machine if desired
         updateUI();
+        startProduction(); // Restart to apply new interval
     }
 }
 
@@ -178,13 +191,14 @@ function handleIndividualProductionUpgrade(event) {
         credits -= upgradeCost;
         machineUpgrades[machineId].production = true;
         updateUI();
-        startProduction(); // Restart production to apply the bonus immediately
+        startProduction(); // Restart to apply bonus
     }
 }
 
 // Event listeners
-if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
+if (timeWarpButton) timeWarpButton.addEventListener('click', handleTimeWarpButtonClick); // Changed listener
 if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
 
 // Initial UI update
 updateUI();
+startProduction(); // Ensure production starts automatically
