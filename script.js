@@ -45,33 +45,35 @@ function updateUI() {
         if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
     }
 
-    // Show upgrade icons in the machine info
+    // Show upgrade icons in the machine info ONLY if the upgrade is purchased
     if (speedIndicator) speedIndicator.style.display = hasSpeedUpgrade ? 'inline-block' : 'none';
     if (productionIndicator) productionIndicator.style.display = hasProductionUpgrade ? 'inline-block' : 'none';
 
     if (topSection) topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
 
     if (upgradeSpeedPanelButton) {
+        upgradeSpeedPanelButton.className = 'speed-upgrade'; // Apply class for shape
         if (hasSpeedUpgrade) {
-            if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
             upgradeSpeedPanelButton.style.display = 'none'; // Hide the button
+            if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
         } else {
-            if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
             upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
             upgradeSpeedPanelButton.disabled = !machinePurchased || credits < speedUpgradeCost;
-            upgradeSpeedPanelButton.style.display = 'block'; // Show the button
+            upgradeSpeedPanelButton.style.display = 'block';
+            if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
         }
     }
 
     if (upgradeProductionPanelButton) {
+        upgradeProductionPanelButton.className = 'production-upgrade'; // Apply class for shape
         if (hasProductionUpgrade) {
-            if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
             upgradeProductionPanelButton.style.display = 'none'; // Hide the button
+            if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
         } else {
-            if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
             upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
             upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
-            upgradeProductionPanelButton.style.display = 'block'; // Show the button
+            upgradeProductionPanelButton.style.display = 'block';
+            if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
         }
     }
 
