@@ -28,7 +28,7 @@ const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 20; // How much faster the game runs
+const fastForwardMultiplier = 2; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -126,14 +126,17 @@ function renderMachines() {
         const machineOutline = document.createElement('div');
         machineOutline.classList.add('machine-outline');
 
-        const topSectionDiv = document.createElement('div');
-        topSectionDiv.classList.add('top-section');
+        // Conditionally create the top section and shape indicator
+        if (i > 0) {
+            const topSectionDiv = document.createElement('div');
+            topSectionDiv.classList.add('top-section');
 
-        const shapeDiv = document.createElement('div');
-        shapeDiv.classList.add('shape-indicator');
+            const shapeDiv = document.createElement('div');
+            shapeDiv.classList.add('shape-indicator');
 
-        topSectionDiv.appendChild(shapeDiv);
-        machineOutline.appendChild(topSectionDiv);
+            topSectionDiv.appendChild(shapeDiv);
+            machineOutline.appendChild(topSectionDiv);
+        }
 
         const machineLabel = document.createElement('div');
         machineLabel.classList.add('machine-label');
