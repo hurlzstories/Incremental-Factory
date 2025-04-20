@@ -1,8 +1,8 @@
 body {
     font-family: sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Center the container horizontally */
+    align-items: flex-start; /* Align container to the top */
     min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
@@ -13,14 +13,14 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: center; /* Center text within elements */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* Center items horizontally in the column */
 }
 
 h1 {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 #game-grid {
@@ -28,7 +28,7 @@ h1 {
     grid-template-columns: 50px; /* 1 column */
     grid-gap: 10px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Space between box and button */
 }
 
 .grid-item {
@@ -46,6 +46,20 @@ h1 {
     width: 30px;
     height: 30px;
     background-color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eee;
+    margin-top: 5px; /* Adjust spacing for other buttons if they appear */
+}
+
+button:hover {
+    background-color: #ddd;
 }
 
 .modal {
