@@ -26,7 +26,7 @@ const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 2; // How much faster the game runs
+const fastForwardMultiplier = 5; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
