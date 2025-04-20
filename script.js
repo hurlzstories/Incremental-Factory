@@ -28,7 +28,7 @@ const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 100; // How much faster the game runs
+const fastForwardMultiplier = 200; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -125,14 +125,17 @@ function renderMachines() {
         const machineOutline = document.createElement('div');
         machineOutline.classList.add('machine-outline');
 
-        const topSectionDiv = document.createElement('div');
-        topSectionDiv.classList.add('top-section');
+        // Conditionally create top section and shape indicator for machines *after* the first
+        if (i > 0) {
+            const topSectionDiv = document.createElement('div');
+            topSectionDiv.classList.add('top-section');
 
-        const shapeDiv = document.createElement('div');
-        shapeDiv.classList.add('shape-indicator');
+            const shapeDiv = document.createElement('div');
+            shapeDiv.classList.add('shape-indicator');
 
-        topSectionDiv.appendChild(shapeDiv);
-        machineOutline.appendChild(topSectionDiv);
+            topSectionDiv.appendChild(shapeDiv);
+            machineOutline.appendChild(topSectionDiv);
+        }
 
         const machineLabel = document.createElement('div');
         machineLabel.classList.add('machine-label');
@@ -141,11 +144,6 @@ function renderMachines() {
         machineContainer.appendChild(machineOutline);
         machineContainer.appendChild(machineLabel);
         mainContent.appendChild(machineContainer);
-
-        // Directly hide the shape indicator for the first machine
-        if (i === 0 && shapeIndicator) {
-            shapeIndicator.style.display = 'none';
-        }
     }
 }
 
