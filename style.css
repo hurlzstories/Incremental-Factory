@@ -90,8 +90,6 @@ aside#side-panel button:hover {
     z-index: 15; /* Above side panel */
 }
 
-/* Removed #upgrade-button-fixed */
-
 #fast-forward-button-fixed {
     top: 80px; /* Adjust vertical position */
 }
