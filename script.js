@@ -20,6 +20,7 @@ function updateUI() {
         buyButton.style.display = 'none';
         shapeIndicator.style.display = 'block';
     } else {
+        buyButton.style.display = 'block';
         buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
         shapeIndicator.style.display = 'none';
     }
@@ -45,9 +46,20 @@ function startProduction() {
     }
 }
 
+function handleUpgradeButtonClick() {
+    console.log("Upgrades button clicked!");
+    // We'll add the upgrade panel logic here later
+}
+
+function handleFastForwardButtonClick() {
+    console.log("Fast Forward button clicked!");
+    // We'll add the fast forward logic here later
+}
+
 // Event listeners
 buyButton.addEventListener('click', buyFirstMachine);
-// We'll add event listeners for the fixed upgrade and fast forward buttons later
+upgradeButtonFixed.addEventListener('click', handleUpgradeButtonClick);
+fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
 
 // Initial UI update
 updateUI();
