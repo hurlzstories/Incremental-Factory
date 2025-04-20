@@ -75,6 +75,7 @@ aside#side-panel .machine-info {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
+    display: none; /* Hide the initial machine info */
 }
 
 aside#side-panel .machine-info h3 {
@@ -107,6 +108,7 @@ aside#side-panel .upgrade-status {
     font-size: 0.9em;
     color: green; /* Example color for "Upgraded" text */
     text-align: center; /* Center the "Upgraded" text */
+    display: none; /* Hide the initial upgrade status */
 }
 
 aside#side-panel button.speed-upgrade::before {
@@ -185,10 +187,6 @@ aside#side-panel button#fast-forward-button-fixed {
     margin-top: 60px; /* Add margin to account for the fixed header height */
 }
 
-.main-content > div:first-child .top-section {
-    display: none !important;
-}
-
 .main-content .machine-container {
     display: flex;
     flex-direction: column;
@@ -213,60 +211,4 @@ aside#side-panel button#fast-forward-button-fixed {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.top-section {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.shape-indicator {
-    width: 30px;
-    height: 30px;
-    background-color: #333;
-}
-
-.upgrade-icons {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-
-.triangle-icon {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red;
-    margin-right: 5px;
-    display: none;
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue;
-    display: none;
-}
-
-.buy-button {
-    background-color: #ddd;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.buy-button:hover {
-    background-color: #ccc;
-}
+    justify-content:
