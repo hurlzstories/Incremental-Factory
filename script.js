@@ -2,7 +2,8 @@
 const creditsDisplay = document.getElementById('credits');
 const buyFabricatorButton = document.getElementById('buy-fabricator');
 const fastForwardButton = document.getElementById('fast-forward');
-const fabricatorList = document.getElementById('fabricator-list');
+const factoryContainer = document.getElementById('factory-container');
+const upgradeContainerTop = document.querySelector('#upgrade-container .upgrade-icon-top'); // Target the top half
 const upgradeChoiceModal = document.getElementById('upgrade-choice-modal');
 const chooseSpeedUpgradeButton = document.getElementById('choose-speed-upgrade');
 const chooseProductionUpgradeButton = document.getElementById('choose-production-upgrade');
@@ -10,7 +11,7 @@ const upgradeMenuButton = document.getElementById('upgrade-menu-button');
 
 // Game state variables
 let credits = 100;
-let fabricatorCount = 0;
+let fabricatorCount = 0; // We'll likely only have one visual representation for now
 let fabricatorBaseCost = 75;
 let fabricatorCost = fabricatorBaseCost;
 let productionInterval = 1000; // Normal production interval (1 second)
@@ -30,26 +31,27 @@ function updateUI() {
     upgradeMenuButton.classList.toggle('hidden', fabricatorCount === 0 || firstUpgradeChosen === null);
     upgradeMenuButton.textContent = `Upgrades (Cost: ${upgradeCost})`; // Update button text
 
-    // Update the visual fabricator list
-    fabricatorList.innerHTML = ''; // Clear the previous list
-    for (let i = 0; i < fabricatorCount; i++) {
-        const bar = document.createElement('div');
-        bar.classList.add('fabricator-bar');
-        const square = document.createElement('div');
-        square.classList.add('fabricator-square');
-        bar.appendChild(square);
-
-        if (firstUpgradeChosen === 'speed') {
-            const triangle = document.createElement('div');
-            triangle.classList.add('upgrade-icon', 'triangle-icon');
-            bar.appendChild(triangle);
-        } else if (firstUpgradeChosen === 'production') {
-            const circle = document.createElement('div');
-            circle.classList.add('upgrade-icon', 'circle-icon');
-            bar.appendChild(circle);
+    // Update the visual representation
+    const factoryIcon = factoryContainer.querySelector('.factory-icon');
+    if (fabricatorCount > 0) {
+        if (!factoryIcon) {
+            const newFactoryIcon = document.createElement('div');
+            newFactoryIcon.classList.add('factory-icon');
+            factoryContainer.appendChild(newFactoryIcon);
         }
+    } else {
+        factoryContainer.innerHTML = '<div class="factory-icon"></div>'; // Ensure a default is present or clear if no factories
+    }
 
-        fabricatorList.appendChild(bar);
+    upgradeContainerTop.innerHTML = ''; // Clear previous upgrade icon
+    if (firstUpgradeChosen === 'speed' && fabricatorCount > 0) {
+        const triangle = document.createElement('div');
+        triangle.classList.add('upgrade-icon', 'triangle-icon');
+        upgradeContainerTop.appendChild(triangle);
+    } else if (firstUpgradeChosen === 'production' && fabricatorCount > 0) {
+        const circle = document.createElement('div');
+        circle.classList.add('upgrade-icon', 'circle-icon');
+        upgradeContainerTop.appendChild(circle);
     }
 
     // Show the upgrade choice modal after the first fabricator is bought
@@ -104,6 +106,8 @@ function toggleFastForward() {
             let currentProduction = fabricatorCount;
             if (firstUpgradeChosen === 'production') {
                 currentProduction *= 1.5; // Apply 0.5x quantity buff
+            } else if (firstUpgradeChosen === 'speed') {
+                // We'll implement the speed increase by reducing the interval
             }
             credits += currentProduction * fastForwardMultiplier;
             updateUI();
@@ -113,12 +117,14 @@ function toggleFastForward() {
             let currentProduction = fabricatorCount;
             if (firstUpgradeChosen === 'production') {
                 currentProduction *= 1.5; // Apply 0.5x quantity buff
+            } else if (firstUpgradeChosen === 'speed') {
+                // We'll implement the speed increase by reducing the interval
             }
             credits += currentProduction;
             updateUI();
         }, productionInterval); // Resume normal speed
     }
-    updateUI(); // Update the button text and fabricator list
+    updateUI(); // Update the button text
 }
 
 // Event listeners
@@ -136,6 +142,8 @@ productionLoop = setInterval(() => {
     let currentProduction = fabricatorCount;
     if (firstUpgradeChosen === 'production') {
         currentProduction *= 1.5; // Apply 0.5x quantity buff
+    } else if (firstUpgradeChosen === 'speed') {
+        // We'll implement the speed increase by reducing the interval
     }
     credits += currentProduction;
     updateUI();
