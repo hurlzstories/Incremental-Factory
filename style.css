@@ -54,22 +54,23 @@ h1 {
 
 .top-section {
     display: flex;
-    align-items: center; /* Align shape and icons horizontally */
-    width: 100%; /* Take full width of the top section */
-    justify-content: flex-start; /* Align items to the left */
-    margin-bottom: 10px; /* Space between top section and button */
+    align-items: center; /* Align shape and icons vertically */
+    width: 100%;
+    justify-content: center; /* Center the shape initially */
+    margin-bottom: 10px;
 }
 
 .shape-indicator {
     width: 30px;
     height: 30px;
     background-color: #333;
-    margin-right: 10px; /* Space between shape and icons */
+    /* margin-right: 10px; Removed initial right margin */
 }
 
 .upgrade-icons {
     display: flex;
     align-items: center;
+    margin-left: auto; /* Push icons to the right */
 }
 
 .triangle-icon {
