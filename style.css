@@ -1,7 +1,7 @@
 body {
     font-family: sans-serif;
     display: flex; /* Use flexbox to position the panel and container */
-    justify-content: center; /* Center the container horizontally */
+    justify-content: flex-start; /* Align items to the left */
     align-items: flex-start; /* Align items to the top */
     min-height: 100vh;
     background-color: #f0f0f0;
@@ -65,7 +65,7 @@ aside#side-panel button:hover {
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center items horizontally */
+    align-items: center; /* Center items horizontally within the container */
     margin-left: 200px; /* Adjust to make space for the side panel */
 }
 
