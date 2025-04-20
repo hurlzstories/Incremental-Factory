@@ -19,99 +19,16 @@ body {
     align-items: center;
 }
 
+h1 {
+    margin-bottom: 15px; /* Add some space below the title */
+}
+
 #game-grid {
     display: grid;
     grid-template-columns: 50px 50px; /* 2 columns */
     grid-gap: 10px; /* Space between grid items */
-    margin-top: 20px;
+    margin-top: 10px; /* Adjust top margin if needed */
+    margin-bottom: 20px; /* Add space below the grid */
 }
 
-.grid-item {
-    width: 50px;
-    height: 50px;
-    background-color: #ddd;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* For absolute positioning of top icon */
-}
-
-.factory-icon {
-    width: 30px;
-    height: 30px;
-    background-color: #333; /* Solid square for factory */
-}
-
-.upgrade-icon-top {
-    width: 100%;
-    height: 50%; /* Top half of the container */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.triangle-icon {
-    /* Simple triangle using borders */
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid green; /* Example color */
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue; /* Example color */
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #eee;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #ddd;
-}
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    text-align: center;
-    border-radius: 8px;
-}
-
-.modal-content button {
-    margin: 10px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
+/* ... rest of your CSS ... */
