@@ -1,139 +1,69 @@
-body {
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: flex-start; /* Align content to the top initially */
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding-top: 30px; /* Space for fixed title */
+const buyButton = document.querySelector('.buy-button');
+const upgradeChoiceModal = document.getElementById('upgrade-choice-modal');
+const chooseSpeedUpgradeButton = document.getElementById('choose-speed-upgrade');
+const chooseProductionUpgradeButton = document.getElementById('choose-production-upgrade');
+const creditsDisplay = document.getElementById('credits');
+const upgradeMenuButton = document.getElementById('upgrade-menu-button');
+const fastForwardButton = document.getElementById('fast-forward');
+const shapeIndicator = document.querySelector('.shape-indicator');
+const triangleIcon = document.querySelector('.triangle-icon');
+const circleIcon = document.querySelector('.circle-icon');
+const topSection = document.querySelector('.top-section');
+
+let credits = 100;
+let machinePurchased = false;
+let firstUpgradeChosen = null;
+const firstMachineCost = 50; // Example cost
+
+function updateUI() {
+    creditsDisplay.textContent = `Credits: ${credits}`;
+
+    if (machinePurchased) {
+        buyButton.style.display = 'none'; // Hide buy button after purchase
+        shapeIndicator.style.display = 'block'; // Show shape indicator
+    } else {
+        buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
+        shapeIndicator.style.display = 'none'; // Hide initially
+    }
+
+    if (firstUpgradeChosen === 'speed') {
+        triangleIcon.style.display = 'block';
+        // Adjust top section alignment when upgrade is present
+        topSection.justifyContent = 'flex-start';
+    } else if (firstUpgradeChosen === 'production') {
+        circleIcon.style.display = 'block';
+        // Adjust top section alignment when upgrade is present
+        topSection.justifyContent = 'flex-start';
+    }
+
+    upgradeChoiceModal.style.display = machinePurchased && firstUpgradeChosen === null ? 'block' : 'none';
+    creditsDisplay.classList.toggle('hidden', !machinePurchased);
+    upgradeMenuButton.classList.toggle('hidden', !machinePurchased || firstUpgradeChosen === null);
+    fastForwardButton.classList.toggle('hidden', !machinePurchased);
 }
 
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center text within elements */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally in the column */
+function buyFirstMachine() {
+    if (credits >= firstMachineCost && !machinePurchased) {
+        credits -= firstMachineCost;
+        machinePurchased = true;
+        updateUI();
+    }
 }
 
-h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    padding: 10px 0;
-    z-index: 10;
-    text-align: center;
+function chooseSpeedUpgrade() {
+    firstUpgradeChosen = 'speed';
+    updateUI();
 }
 
-#machine-container {
-    margin-top: 80px; /* Adjust to avoid overlap with fixed title */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+function chooseProductionUpgrade() {
+    firstUpgradeChosen = 'production';
+    updateUI();
 }
 
-.machine-outline {
-    width: 120px; /* Wider to accommodate icons */
-    height: 120px;
-    border: 1px solid #333;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
+// Event listeners
+buyButton.addEventListener('click', buyFirstMachine);
+chooseSpeedUpgradeButton.addEventListener('click', chooseSpeedUpgrade);
+chooseProductionUpgradeButton.addEventListener('click', chooseProductionUpgrade);
 
-.top-section {
-    display: flex;
-    align-items: center; /* Align shape and icons vertically */
-    width: 100%;
-    justify-content: center; /* Center the shape initially */
-    margin-bottom: 10px;
-}
-
-.shape-indicator {
-    width: 30px;
-    height: 30px;
-    background-color: #333;
-    /* margin-right: 10px; Removed initial right margin */
-}
-
-.upgrade-icons {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Push icons to the right */
-}
-
-.triangle-icon {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red; /* Example red color */
-    margin-right: 5px; /* Space between icons */
-    /* Initially hidden */
-    display: none;
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue; /* Example blue color */
-    /* Initially hidden */
-    display: none;
-}
-
-.buy-button {
-    background-color: #ddd;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.buy-button:hover {
-    background-color: #ccc;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    text-align: center;
-    border-radius: 8px;
-}
-
-.modal-content button {
-    margin: 10px;
-}
-
-.hidden {
-    display: none !important;
-}
+// Initial UI update
+updateUI();
