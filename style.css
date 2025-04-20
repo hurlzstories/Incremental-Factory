@@ -2,55 +2,59 @@ body {
     font-family: sans-serif;
     display: flex;
     justify-content: center; /* Center content horizontally */
-    align-items: flex-start; /* Align content to the top */
-    min-height: 100vh;
+    align-items: center; /* Center content vertically */
+    min-height: 100vh; /* Make body take full viewport height */
     background-color: #f0f0f0;
     margin: 0;
 }
 
 .container {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* More padding */
+    border-radius: 10px; /* Slightly more rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
     text-align: center; /* Center text within elements */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally in the column */
+    width: 80%; /* Take up more width */
+    max-width: 600px; /* Set a maximum width */
 }
 
 h1 {
-    margin-bottom: 20px;
+    font-size: 2em; /* Larger title */
+    margin-bottom: 15px;
 }
 
 #factory-representation {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px; /* More space below the machine */
 }
 
 .factory-outline {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #333; /* Black outline */
+    width: 80px; /* Larger outline */
+    height: 80px; /* Larger outline */
+    border: 2px solid #333; /* Thicker outline */
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5px; /* Space between outline and button */
+    margin-bottom: 10px; /* More space between outline and button */
 }
 
 .factory-icon {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* Larger solid square */
+    height: 40px; /* Larger solid square */
     background-color: #333;
 }
 
 button {
-    padding: 6px 12px; /* Smaller button */
-    font-size: 12px; /* Smaller font */
+    padding: 10px 20px; /* Larger button */
+    font-size: 1.2em; /* Larger font */
     cursor: pointer;
-    border: 1px solid #333; /* Black border */
-    border-radius: 4px;
+    border: 2px solid #333; /* Thicker border */
+    border-radius: 6px; /* More rounded corners */
     background-color: #eee;
     margin-top: 0;
 }
