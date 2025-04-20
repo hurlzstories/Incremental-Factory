@@ -60,8 +60,13 @@ function updateUI() {
         upgradeChoiceModal.style.display = 'block';
         gamePaused = true; // Pause the game
         hasFirstFabricator = true;
+        console.log("Modal should be visible, game paused:", gamePaused); // Debug log
     } else {
         upgradeChoiceModal.style.display = 'none';
+        if (gamePaused && firstUpgradeChosen !== null) {
+            gamePaused = false;
+            console.log("Modal hidden, game unpaused:", gamePaused); // Debug log
+        }
     }
 }
 
@@ -70,6 +75,7 @@ function buyFabricator() {
     if (credits >= fabricatorCost) {
         credits -= fabricatorCost;
         fabricatorCount++;
+        console.log("Fabricator bought, count:", fabricatorCount); // Debug log
         updateUI();
     }
 }
@@ -78,6 +84,7 @@ function buyFabricator() {
 function chooseSpeedUpgrade() {
     firstUpgradeChosen = 'speed';
     gamePaused = false; // Unpause the game
+    console.log("Speed upgrade chosen, game unpaused:", gamePaused); // Debug log
     updateUI(); // Hide the modal and show the upgrade button
 }
 
@@ -85,6 +92,7 @@ function chooseSpeedUpgrade() {
 function chooseProductionUpgrade() {
     firstUpgradeChosen = 'production';
     gamePaused = false; // Unpause the game
+    console.log("Production upgrade chosen, game unpaused:", gamePaused); // Debug log
     updateUI(); // Hide the modal and show the upgrade button
 }
 
@@ -96,6 +104,7 @@ function buyFirstUpgrade() {
         updateUI();
         // Disable the upgrade menu button after purchase for this initial phase
         upgradeMenuButton.disabled = true;
+        console.log("First upgrade bought:", firstUpgradeChosen); // Debug log
     }
 }
 
@@ -129,13 +138,6 @@ function toggleFastForward() {
     }
     updateUI(); // Update the button text
 }
-
-// Event listeners
-buyFabricatorButton.addEventListener('click', buyFabricator);
-fastForwardButton.addEventListener('click', toggleFastForward);
-chooseSpeedUpgradeButton.addEventListener('click', chooseSpeedUpgrade);
-chooseProductionUpgradeButton.addEventListener('click', chooseProductionUpgrade);
-upgradeMenuButton.addEventListener('click', buyFirstUpgrade);
 
 // Initial UI update
 updateUI();
