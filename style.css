@@ -185,6 +185,10 @@ aside#side-panel button#fast-forward-button-fixed {
     margin-top: 60px; /* Add margin to account for the fixed header height */
 }
 
+.main-content > div:first-child .top-section {
+    display: none !important;
+}
+
 .main-content .machine-container {
     display: flex;
     flex-direction: column;
@@ -215,16 +219,11 @@ aside#side-panel button#fast-forward-button-fixed {
 }
 
 .top-section {
-    display: none; /* Initially hide the top section for all machines */
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: center;
     margin-bottom: 10px;
-}
-
-.main-content .machine-container:not(:first-child) .top-section {
-    display: flex; /* Show top section for subsequent machines */
 }
 
 .shape-indicator {
