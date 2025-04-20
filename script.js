@@ -28,39 +28,22 @@ let additionalMachineCost = 300; // Initial value for the second machine
 let hasSpeedUpgrade = false; // May not be needed
 let hasProductionUpgrade = false; // May not be needed
 let isFastForwardActive = false;
-const fastForwardMultiplier = 200; // How much faster the game runs
+const fastForwardMultiplier = 2; // How much faster the game runs
 const machineUpgrades = {}; // Object to store upgrades for each machine
 
 function updateUI() {
     if (!creditsDisplay) return;
     creditsDisplay.textContent = `Credits: ${credits}`;
 
-    if (machineCount > 0) {
-        if (shapeIndicator) shapeIndicator.style.display = 'block';
-        if (machine1Info) machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
-        if (purchaseMachineButton) {
-            purchaseMachineButton.textContent = `Buy Another Machine (Cost: ${additionalMachineCost})`;
-            purchaseMachineButton.style.display = 'block';
-        }
-    } else {
-        if (shapeIndicator) shapeIndicator.style.display = 'none';
-        if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
-        if (purchaseMachineButton) {
-            purchaseMachineButton.textContent = `Buy First Machine (Cost: ${firstMachineCost})`;
-            purchaseMachineButton.style.display = 'block';
-        }
-    }
-
-    // We no longer update global upgrade buttons here
-    renderMachines(); // This will now also handle updating the side panel
+    renderMachines(); // This handles both rendering machines and the side panel upgrades
 }
 
 function buyFirstMachine() {
     if (credits >= firstMachineCost) {
         credits -= firstMachineCost;
         machineCount++;
-        machineUpgrades[1] = { speed: false, production: false, cost: firstMachineCost }; // Initialize upgrades for the first machine
-        additionalMachineCost = firstMachineCost * 3; // Set the price for the next machine
+        machineUpgrades[1] = { speed: false, production: false, cost: firstMachineCost }; // Store the cost
+        additionalMachineCost = firstMachineCost * 3;
         startProduction();
         updateUI();
     }
@@ -68,20 +51,21 @@ function buyFirstMachine() {
 
 function buyAdditionalMachine() {
     if (credits >= additionalMachineCost) {
-        credits -= additionalMachineCost;
+        const costOfNewMachine = additionalMachineCost; // Store the cost of the new machine
+        credits -= costOfNewMachine;
         machineCount++;
-        machineUpgrades[machineCount] = { speed: false, production: false, cost: additionalMachineCost / 3 }; // Initialize upgrades for the new machine
-        additionalMachineCost *= 3; // Increase the price for the next machine
-        updateUI(); // Re-render the machines and side panel
+        machineUpgrades[machineCount] = { speed: false, production: false, cost: costOfNewMachine / 3 }; // Store the cost (previous additional cost)
+        additionalMachineCost *= 3;
+        updateUI();
     }
 }
 
 function renderMachines() {
     if (!mainContent || !sidePanel) return;
-    mainContent.innerHTML = ''; // Clear existing machines
+    mainContent.innerHTML = '';
     const upgradesContainer = sidePanel.querySelector('.upgrades-container');
     if (upgradesContainer) {
-        upgradesContainer.innerHTML = ''; // Clear previous upgrade sections
+        upgradesContainer.innerHTML = '';
     } else {
         const newUpgradesContainer = document.createElement('div');
         newUpgradesContainer.classList.add('upgrades-container');
@@ -125,7 +109,7 @@ function renderMachines() {
         const speedUpgradeButton = document.createElement('button');
         speedUpgradeButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCostForMachine})`;
         speedUpgradeButton.classList.add('speed-upgrade');
-        speedUpgradeButton.dataset.machineId = i; // Store machine ID
+        speedUpgradeButton.dataset.machineId = i;
         speedUpgradeButton.disabled = machineUpgrades[i].speed || credits < speedUpgradeCostForMachine;
         speedUpgradeButton.addEventListener('click', handleIndividualSpeedUpgrade);
         machineUpgradeSection.appendChild(speedUpgradeButton);
@@ -134,7 +118,7 @@ function renderMachines() {
         const productionUpgradeButton = document.createElement('button');
         productionUpgradeButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCostForMachine})`;
         productionUpgradeButton.classList.add('production-upgrade');
-        productionUpgradeButton.dataset.machineId = i; // Store machine ID
+        productionUpgradeButton.dataset.machineId = i;
         productionUpgradeButton.disabled = machineUpgrades[i].production || credits < productionUpgradeCostForMachine;
         productionUpgradeButton.addEventListener('click', handleIndividualProductionUpgrade);
         machineUpgradeSection.appendChild(productionUpgradeButton);
