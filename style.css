@@ -95,41 +95,6 @@ aside#side-panel .upgrade-indicators .indicator {
 }
 
 aside#side-panel .upgrade-indicators .square { background-color: #333; }
-aside#side-panel .upgrade-indicators .triangle {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red;
-    border-top: none;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: transparent;
-    border: 0;
-    border-bottom: 15px solid red;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    width: 0;
-    height: 0;
-}
-aside#side-panel .upgrade-indicators .star {
-    /* Basic star shape - can be refined with more CSS */
-    color: gold;
-    font-size: 1em;
-    display: inline-block;
-    line-height: 1;
-    position: relative;
-    width: 0;
-    height: 0;
-}
-aside#side-panel .upgrade-indicators .star::before {
-    content: '\2605';
-    position: absolute;
-    top: -3px;
-    left: -5px;
-    font-size: 1.5em;
-}
-aside#side-panel .upgrade-indicators .circle { border-radius: 50%; background-color: blue; }
 
 aside#side-panel h4 {
     margin-top: 10px;
@@ -144,7 +109,7 @@ aside#side-panel .upgrade-status {
     text-align: center; /* Center the "Upgraded" text */
 }
 
-aside#side-panel button.speed-upgraded::before {
+aside#side-panel button.speed-upgrade::before {
     content: "";
     display: inline-block;
     width: 0;
@@ -152,19 +117,53 @@ aside#side-panel button.speed-upgraded::before {
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-bottom: 10px solid red;
-    margin-right: 0; /* Adjust spacing */
+    margin-right: 8px;
     vertical-align: middle;
 }
 
-aside#side-panel button.production-upgraded::before {
+aside#side-panel button.production-upgrade::before {
     content: "";
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: blue;
-    margin-right: 0; /* Adjust spacing */
+    margin-right: 8px;
     vertical-align: middle;
+}
+
+aside#side-panel .upgrade-indicators .speed-indicator {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 10px solid red;
+    margin-right: 5px;
+    vertical-align: middle; /* Align with the square */
+    display: none; /* Hidden by default */
+}
+
+aside#side-panel .upgrade-indicators .production-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: blue;
+    margin-right: 5px;
+    vertical-align: middle; /* Align with the square */
+    display: none; /* Hidden by default */
+}
+
+/* Hide the generic triangle and circle indicators */
+aside#side-panel .upgrade-indicators .triangle,
+aside#side-panel .upgrade-indicators .star,
+aside#side-panel .upgrade-indicators .circle {
+    display: none;
+}
+
+/* Hide the upgrade buttons and status text when both are bought */
+aside#side-panel.upgrades-complete .upgrade-status,
+aside#side-panel.upgrades-complete button[id^="upgrade-"] {
+    display: none !important;
 }
 
 aside#side-panel button#fast-forward-button-fixed {
