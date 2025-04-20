@@ -35,6 +35,15 @@ function updateUI() {
     if (!creditsDisplay) return;
     creditsDisplay.textContent = `Credits: ${credits}`;
 
+    // Update the purchase button text based on whether the first machine is bought
+    if (purchaseMachineButton) {
+        if (machineCount === 0) {
+            purchaseMachineButton.textContent = `Buy First Machine (Cost: ${firstMachineCost})`;
+        } else {
+            purchaseMachineButton.textContent = `Buy Another Machine (Cost: ${additionalMachineCost})`;
+        }
+    }
+
     renderMachines(); // This handles both rendering machines and the side panel upgrades
 }
 
@@ -85,8 +94,20 @@ function renderMachines() {
 
         const shapeDiv = document.createElement('div');
         shapeDiv.classList.add('shape-indicator');
-
         topSectionDiv.appendChild(shapeDiv);
+
+        // Add upgrade icons to the machine outline
+        if (machineUpgrades[i].speed) {
+            const speedIcon = document.createElement('div');
+            speedIcon.classList.add('upgrade-icon', 'speed-icon');
+            topSectionDiv.appendChild(speedIcon);
+        }
+        if (machineUpgrades[i].production) {
+            const productionIcon = document.createElement('div');
+            productionIcon.classList.add('upgrade-icon', 'production-icon');
+            topSectionDiv.appendChild(productionIcon);
+        }
+
         machineOutline.appendChild(topSectionDiv);
 
         const machineLabel = document.createElement('div');
@@ -111,8 +132,9 @@ function renderMachines() {
         speedUpgradeButton.classList.add('speed-upgrade');
         speedUpgradeButton.dataset.machineId = i;
         speedUpgradeButton.disabled = machineUpgrades[i].speed || credits < speedUpgradeCostForMachine;
-        speedUpgradeButton.addEventListener('click', handleIndividualSpeedUpgrade);
-        machineUpgradeSection.appendChild(speedUpgradeButton);
+        if (!machineUpgrades[i].speed) { // Only append if not purchased
+            machineUpgradeSection.appendChild(speedUpgradeButton);
+        }
 
         const productionUpgradeCostForMachine = Math.round(machineUpgrades[i].cost * 1.5);
         const productionUpgradeButton = document.createElement('button');
@@ -120,8 +142,9 @@ function renderMachines() {
         productionUpgradeButton.classList.add('production-upgrade');
         productionUpgradeButton.dataset.machineId = i;
         productionUpgradeButton.disabled = machineUpgrades[i].production || credits < productionUpgradeCostForMachine;
-        productionUpgradeButton.addEventListener('click', handleIndividualProductionUpgrade);
-        machineUpgradeSection.appendChild(productionUpgradeButton);
+        if (!machineUpgrades[i].production) { // Only append if not purchased
+            machineUpgradeSection.appendChild(productionUpgradeButton);
+        }
 
         sidePanel.querySelector('.upgrades-container').appendChild(machineUpgradeSection);
     }
@@ -178,9 +201,8 @@ function handleIndividualSpeedUpgrade(event) {
     if (credits >= upgradeCost && !machineUpgrades[machineId].speed) {
         credits -= upgradeCost;
         machineUpgrades[machineId].speed = true;
-        productionInterval *= 0.8; // Global speed increase - consider making this per machine if desired
         updateUI();
-        startProduction(); // Restart to apply new interval
+        startProduction(); // Restart to apply new interval (even though speed is global)
     }
 }
 
