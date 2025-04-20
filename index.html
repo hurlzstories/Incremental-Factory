@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <aside id="upgrade-panel" class="hidden">
+        <h3>First Upgrade?</h3>
+        <button id="choose-speed-upgrade">Triangle (Speed Buff)</button>
+        <button id="choose-production-upgrade">Circle (Production Buff)</button>
+    </aside>
     <div class="container">
         <h1>Shape Factory Inc.</h1>
         <div id="machine-container">
@@ -24,14 +29,6 @@
         <div id="credits" class="hidden">Credits: 100</div>
         <button id="upgrade-menu-button" class="hidden">Upgrades</button>
         <button id="fast-forward" class="hidden">Fast Forward (Off)</button>
-    </div>
-
-    <div id="upgrade-choice-modal" class="modal">
-        <div class="modal-content">
-            <h3>First Upgrade?</h3>
-            <button id="choose-speed-upgrade">Triangle (Speed Buff)</button>
-            <button id="choose-production-upgrade">Circle (Production Buff)</button>
-        </div>
     </div>
 
     <script src="script.js"></script>
