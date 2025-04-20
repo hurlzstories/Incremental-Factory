@@ -175,12 +175,12 @@ aside#side-panel button#fast-forward-button-fixed {
 }
 
 .main-content {
-    display: grid; /* Use grid layout */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Create responsive columns */
-    gap: 20px; /* Spacing between grid items */
+    display: flex; /* Use flexbox layout */
+    justify-content: center; /* Center items horizontally */
+    align-items: flex-start; /* Align items to the top */
     margin-left: 200px; /* Space for side panel */
     padding: 20px;
-    align-items: start; /* Align items to the top of their grid cells */
+    gap: 20px; /* Spacing between machines */
 }
 
 .main-content .machine-container {
@@ -191,11 +191,13 @@ aside#side-panel button#fast-forward-button-fixed {
     border-radius: 8px;
     padding: 10px;
     background-color: #fff; /* Optional: Background for each container */
+    min-width: 150px; /* Ensure machines don't get too narrow */
 }
 
 .main-content .machine-label {
     margin-top: 10px;
     font-size: 1.1em;
+    text-align: center; /* Center the label below the machine */
 }
 
 .machine-outline {
