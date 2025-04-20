@@ -67,7 +67,7 @@ aside#side-panel button {
     background-color: #eee;
     width: 100%;
     box-sizing: border-box;
-    text-align: center; /* Center the shape */
+    text-align: left; /* Align text in action button to the left */
 }
 
 aside#side-panel .machine-info {
@@ -168,7 +168,7 @@ aside#side-panel.upgrades-complete button[id^="upgrade-"] {
     display: none !important;
 }
 
-aside#side-panel button#fast-forward-button-fixed {
+aside#side-panel button#time-warp-button {
     margin-top: auto; /* Push to the bottom */
     width: 100%;
     box-sizing: border-box;
@@ -183,112 +183,3 @@ aside#side-panel button#fast-forward-button-fixed {
     margin-left: 200px; /* Space for side panel */
     padding: 20px;
     gap: 20px; /* Spacing between machines */
-    flex-grow: 1; /* Take up remaining width */
-    margin-top: 60px; /* Add margin to account for the fixed header height */
-}
-
-.main-content .machine-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #eee; /* Optional: Add a border around each machine container */
-    border-radius: 8px;
-    padding: 10px;
-    background-color: #fff; /* Optional: Background for each container */
-    min-width: 150px; /* Ensure machines don't get too narrow */
-}
-
-.main-content .machine-label {
-    margin-top: 10px;
-    font-size: 1.1em;
-    text-align: center; /* Center the label below the machine */
-}
-
-.machine-outline {
-    width: 120px;
-    height: 120px;
-    border: 1px solid #333;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.top-section {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.shape-indicator {
-    width: 30px;
-    height: 30px;
-    background-color: #333;
-}
-
-.upgrade-icons {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-
-.triangle-icon {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red;
-    margin-right: 5px;
-    display: none;
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue;
-    display: none;
-}
-
-.buy-button {
-    background-color: #ddd;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.buy-button:hover {
-    background-color: #ccc;
-}
-
-.upgrades-container {
-    margin-bottom: 15px; /* Add some space below the upgrade sections */
-}
-
-.machine-upgrade-section {
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #eee;
-}
-
-.machine-upgrade-section h4 {
-    margin-top: 0;
-    margin-bottom: 5px;
-}
-
-.machine-upgrade-section button {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 5px;
-    padding: 8px 12px;
-    font-size: 0.9em;
-    text-align: left; /* Align text in upgrade buttons to the left */
-}
