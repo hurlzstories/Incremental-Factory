@@ -7,7 +7,7 @@ const circleIcon = document.querySelector('.circle-icon');
 const topSection = document.querySelector('.top-section');
 const purchaseMachineButton = document.getElementById('purchase-machine-button');
 const upgradeSpeedPanelButton = document.getElementById('upgrade-speed-panel-button');
-const upgradeProductionPanelButton = document.getElementById('upgrade-production-panel-button');
+const upgradeProductionPanelButton = document.getElementById('production-upgrade-panel-button');
 const machine1Info = document.getElementById('machine-1-info'); // Reference to machine info in sidebar
 const speedUpgradeStatus = document.getElementById('speed-upgrade-status');
 const productionUpgradeStatus = document.getElementById('production-upgrade-status');
@@ -15,13 +15,15 @@ const productionUpgradeStatus = document.getElementById('production-upgrade-stat
 let credits = 100;
 let machineCount = 0; // Track the number of machines
 let machinePurchased = false; // For the first machine
-let productionInterval = 1000; // 1 credit per second per machine
+let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
 const firstMachineCost = 50;
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
+let isFastForwardActive = false;
+const fastForwardMultiplier = 2; // How much faster the game runs
 
 function updateUI() {
     creditsDisplay.textContent = `Credits: ${credits}`;
@@ -64,6 +66,8 @@ function updateUI() {
         upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
         upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
     }
+
+    fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
 }
 
 function buyFirstMachine() {
@@ -77,17 +81,20 @@ function buyFirstMachine() {
 }
 
 function startProduction() {
+    clearInterval(productionLoop); // Clear any existing interval
     if (machinePurchased) {
+        const interval = isFastForwardActive ? productionInterval / fastForwardMultiplier : productionInterval;
         productionLoop = setInterval(() => {
             credits += machineCount; // Credits per second per machine
             updateUI();
-        }, productionInterval);
+        }, interval);
     }
 }
 
 function handleFastForwardButtonClick() {
-    console.log("Fast Forward button clicked!");
-    // We'll add the fast forward logic here later
+    isFastForwardActive = !isFastForwardActive;
+    startProduction(); // Restart production with the new interval
+    updateUI();
 }
 
 function handlePurchaseMachineButtonClick() {
@@ -99,8 +106,7 @@ function handleUpgradeSpeedPanelButtonClick() {
     if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade) {
         credits -= speedUpgradeCost;
         hasSpeedUpgrade = true;
-        productionInterval *= 0.8; // Example speed increase
-        clearInterval(productionLoop);
+        productionInterval *= 0.8; // Example speed increase from upgrade
         startProduction();
         updateUI();
     }
