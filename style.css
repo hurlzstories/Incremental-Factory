@@ -30,7 +30,9 @@ header h1 {
 
 header #credits {
     font-size: 1.1em;
-    color: #333; /* Add a dark text color */
+    color: #333; /* Ensure text is visible */
+    margin-right: 50%; /* Push it towards the center from the right */
+    text-align: right; /* Align the text to the right within its allocated space */
 }
 
 aside#side-panel {
