@@ -1,39 +1,52 @@
 body {
     font-family: sans-serif;
-    display: flex; /* Use flexbox to position the panel and container */
-    justify-content: flex-start; /* Align items to the left */
-    align-items: flex-start; /* Align items to the top */
+    display: flex; /* For overall layout */
+    justify-content: flex-start; /* Align items from the left */
+    align-items: flex-start; /* Align items from the top */
     min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
-    padding-top: 30px; /* Space for fixed title */
+    padding-top: 60px; /* Space for header */
 }
 
-h1 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
+header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #fff;
-    padding: 10px 0;
-    z-index: 10;
-    text-align: center;
+    padding: 10px 20px;
+    z-index: 20; /* Above other elements */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+header #credits {
+    font-size: 1.1em;
 }
 
 aside#side-panel {
     position: fixed;
-    top: 60px; /* Below the fixed title */
-    left: 0; /* Flush with the left edge */
+    top: 80px; /* Below the header */
+    left: 0;
     background-color: #fefefe;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 8px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 15; /* Below the fixed right buttons */
-    text-align: center;
-    width: 180px; /* Adjust width as needed */
+    z-index: 15;
+    text-align: left; /* Align text within the panel */
+    width: 180px;
+    height: calc(100vh - 100px); /* Adjust height to fit screen */
+    display: flex;
+    flex-direction: column;
 }
 
 aside#side-panel h3 {
@@ -42,44 +55,173 @@ aside#side-panel h3 {
 }
 
 aside#side-panel button {
-    margin: 5px 0;
+    margin-bottom: 8px;
     padding: 8px 12px;
     font-size: 1em;
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #eee;
-    width: 100%; /* Make buttons fill the panel width */
-    box-sizing: border-box; /* Include padding and border in width */
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
 }
 
-aside#side-panel button:hover {
+aside#side-panel .machine-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+aside#side-panel .machine-info h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+aside#side-panel .upgrade-indicators {
+    margin-bottom: 10px;
+}
+
+aside#side-panel .upgrade-indicators .indicator {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 1px solid #333;
+}
+
+aside#side-panel .upgrade-indicators .square { background-color: #333; }
+aside#side-panel .upgrade-indicators .triangle {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid red;
+    border-top: none;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border: 0;
+    border-bottom: 15px solid red;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    width: 0;
+    height: 0;
+}
+aside#side-panel .upgrade-indicators .star {
+    /* Basic star shape - can be refined with more CSS */
+    color: gold;
+    font-size: 1em;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    width: 0;
+    height: 0;
+}
+aside#side-panel .upgrade-indicators .star::before {
+    content: '\2605';
+    position: absolute;
+    top: -3px;
+    left: -5px;
+    font-size: 1.5em;
+}
+aside#side-panel .upgrade-indicators .circle { border-radius: 50%; background-color: blue; }
+
+aside#side-panel h4 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; /* Center machine horizontally */
+    align-items: center; /* Center machine vertically */
+    flex-grow: 1; /* Take remaining vertical space */
+    margin-left: 200px; /* Space for side panel */
+    padding: 20px;
+    flex-direction: column; /* Stack machine and label */
+}
+
+.main-content .machine-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-content .machine-label {
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.machine-outline {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #333;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.top-section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.shape-indicator {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+}
+
+.upgrade-icons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.triangle-icon {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid red;
+    margin-right: 5px;
+    display: none;
+}
+
+.circle-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: blue;
+    display: none;
+}
+
+.buy-button {
     background-color: #ddd;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
 
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally within the container */
-    margin-left: 200px; /* Adjust to make space for the side panel */
+.buy-button:hover {
+    background-color: #ccc;
 }
-
-#machine-container {
-    margin-top: 80px; /* Adjust for fixed title */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center machine */
-}
-
-/* ... the rest of your CSS ... */
 
 .fixed-button {
     position: fixed;
+    top: 80px; /* Align with side panel */
     right: 10px;
     padding: 10px 15px;
     font-size: 1em;
@@ -87,9 +229,5 @@ aside#side-panel button:hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #eee;
-    z-index: 15; /* Above side panel */
-}
-
-#fast-forward-button-fixed {
-    top: 80px; /* Adjust vertical position */
+    z-index: 15;
 }
