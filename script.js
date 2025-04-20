@@ -6,11 +6,11 @@ const triangleIcon = document.querySelector('.triangle-icon');
 const circleIcon = document.querySelector('.circle-icon');
 const topSection = document.querySelector('.top-section');
 const purchaseMachineButton = document.getElementById('purchase-machine-button');
-const upgradeSpeedPanelButton = document.getElementById('upgrade-speed-panel-button');
-const upgradeProductionPanelButton = document.getElementById('upgrade-production-panel-button');
+const upgradeSpeedPanelButton = document.getElementById('upgrade-speed-panel-button'); // May not be needed
+const upgradeProductionPanelButton = document.getElementById('upgrade-production-panel-button'); // May not be needed
 const machine1Info = document.getElementById('machine-1-info'); // Reference to machine info in sidebar
-const speedUpgradeStatus = document.getElementById('speed-upgrade-status');
-const productionUpgradeStatus = document.getElementById('production-upgrade-status');
+const speedUpgradeStatus = document.getElementById('speed-upgrade-status'); // May not be needed
+const productionUpgradeStatus = document.getElementById('production-upgrade-status'); // May not be needed
 const sidePanel = document.getElementById('side-panel');
 const speedIndicator = document.querySelector('.speed-indicator');
 const productionIndicator = document.querySelector('.production-indicator');
@@ -23,12 +23,13 @@ let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
 let firstMachineCost = 100; // Price of the first machine
 let additionalMachineCost = 300; // Initial value for the second machine
-const speedUpgradeCost = 100; // Example cost
-const productionUpgradeCost = 150; // Example cost
-let hasSpeedUpgrade = false;
-let hasProductionUpgrade = false;
+// const speedUpgradeCost = 100; // No longer global
+// const productionUpgradeCost = 150; // No longer global
+let hasSpeedUpgrade = false; // May not be needed
+let hasProductionUpgrade = false; // May not be needed
 let isFastForwardActive = false;
 const fastForwardMultiplier = 200; // How much faster the game runs
+const machineUpgrades = {}; // Object to store upgrades for each machine
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -50,55 +51,15 @@ function updateUI() {
         }
     }
 
-    // Show upgrade icons in the machine info ONLY if the upgrade is purchased
-    if (speedIndicator) speedIndicator.style.display = hasSpeedUpgrade ? 'inline-block' : 'none';
-    if (productionIndicator) productionIndicator.style.display = hasProductionUpgrade ? 'inline-block' : 'none';
-
-    if (topSection) topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
-
-    if (upgradeSpeedPanelButton) {
-        upgradeSpeedPanelButton.className = 'speed-upgrade'; // Apply class for shape
-        if (hasSpeedUpgrade) {
-            upgradeSpeedPanelButton.style.display = 'none'; // Hide the button
-            if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
-        } else {
-            upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
-            upgradeSpeedPanelButton.disabled = machineCount === 0 || credits < speedUpgradeCost;
-            upgradeSpeedPanelButton.style.display = 'block';
-            if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
-        }
-    }
-
-    if (upgradeProductionPanelButton) {
-        upgradeProductionPanelButton.className = 'production-upgrade'; // Apply class for shape
-        if (hasProductionUpgrade) {
-            upgradeProductionPanelButton.style.display = 'none'; // Hide the button
-            if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
-        } else {
-            upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
-            upgradeProductionPanelButton.disabled = machineCount === 0 || credits < productionUpgradeCost;
-            upgradeProductionPanelButton.style.display = 'block';
-            if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
-        }
-    }
-
-    // Hide upgrade section if both are bought
-    if (hasSpeedUpgrade && hasProductionUpgrade && sidePanel) {
-        sidePanel.classList.add('upgrades-complete');
-    } else if (sidePanel) {
-        sidePanel.classList.remove('upgrades-complete');
-    }
-
-    if (fastForwardButtonFixed) fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
-
-    // Render the machines in the main content area
-    renderMachines();
+    // We no longer update global upgrade buttons here
+    renderMachines(); // This will now also handle updating the side panel
 }
 
 function buyFirstMachine() {
     if (credits >= firstMachineCost) {
         credits -= firstMachineCost;
         machineCount++;
+        machineUpgrades[1] = { speed: false, production: false, cost: firstMachineCost }; // Initialize upgrades for the first machine
         additionalMachineCost = firstMachineCost * 3; // Set the price for the next machine
         startProduction();
         updateUI();
@@ -109,18 +70,28 @@ function buyAdditionalMachine() {
     if (credits >= additionalMachineCost) {
         credits -= additionalMachineCost;
         machineCount++;
+        machineUpgrades[machineCount] = { speed: false, production: false, cost: additionalMachineCost / 3 }; // Initialize upgrades for the new machine
         additionalMachineCost *= 3; // Increase the price for the next machine
-        updateUI(); // Re-render the machines
+        updateUI(); // Re-render the machines and side panel
     }
 }
 
 function renderMachines() {
-    if (!mainContent) return;
+    if (!mainContent || !sidePanel) return;
     mainContent.innerHTML = ''; // Clear existing machines
-    for (let i = 0; i < machineCount; i++) {
+    const upgradesContainer = sidePanel.querySelector('.upgrades-container');
+    if (upgradesContainer) {
+        upgradesContainer.innerHTML = ''; // Clear previous upgrade sections
+    } else {
+        const newUpgradesContainer = document.createElement('div');
+        newUpgradesContainer.classList.add('upgrades-container');
+        sidePanel.appendChild(newUpgradesContainer);
+    }
+
+    for (let i = 1; i <= machineCount; i++) {
         const machineContainer = document.createElement('div');
         machineContainer.classList.add('machine-container');
-        machineContainer.id = `machine-${i + 1}`; // Unique ID for each machine
+        machineContainer.id = `machine-${i}`;
 
         const machineOutline = document.createElement('div');
         machineOutline.classList.add('machine-outline');
@@ -136,27 +107,56 @@ function renderMachines() {
 
         const machineLabel = document.createElement('div');
         machineLabel.classList.add('machine-label');
-        machineLabel.textContent = `Machine ${i + 1}`;
+        machineLabel.textContent = `Machine ${i}`;
 
         machineContainer.appendChild(machineOutline);
         machineContainer.appendChild(machineLabel);
         mainContent.appendChild(machineContainer);
+
+        // Update the side panel with upgrade options for each machine
+        const machineUpgradeSection = document.createElement('div');
+        machineUpgradeSection.classList.add('machine-upgrade-section');
+
+        const machineNameHeader = document.createElement('h4');
+        machineNameHeader.textContent = `Machine ${i} Upgrades`;
+        machineUpgradeSection.appendChild(machineNameHeader);
+
+        const speedUpgradeCostForMachine = Math.round(machineUpgrades[i].cost * 1.5);
+        const speedUpgradeButton = document.createElement('button');
+        speedUpgradeButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCostForMachine})`;
+        speedUpgradeButton.classList.add('speed-upgrade');
+        speedUpgradeButton.dataset.machineId = i; // Store machine ID
+        speedUpgradeButton.disabled = machineUpgrades[i].speed || credits < speedUpgradeCostForMachine;
+        speedUpgradeButton.addEventListener('click', handleIndividualSpeedUpgrade);
+        machineUpgradeSection.appendChild(speedUpgradeButton);
+
+        const productionUpgradeCostForMachine = Math.round(machineUpgrades[i].cost * 1.5);
+        const productionUpgradeButton = document.createElement('button');
+        productionUpgradeButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCostForMachine})`;
+        productionUpgradeButton.classList.add('production-upgrade');
+        productionUpgradeButton.dataset.machineId = i; // Store machine ID
+        productionUpgradeButton.disabled = machineUpgrades[i].production || credits < productionUpgradeCostForMachine;
+        productionUpgradeButton.addEventListener('click', handleIndividualProductionUpgrade);
+        machineUpgradeSection.appendChild(productionUpgradeButton);
+
+        sidePanel.querySelector('.upgrades-container').appendChild(machineUpgradeSection);
     }
 }
 
 function startProduction() {
     clearInterval(productionLoop); // Clear any existing interval
     if (machineCount > 0) {
-        const baseProductionRate = 1; // Default credits per machine per interval
-        let currentProductionRate = baseProductionRate;
-
-        if (hasProductionUpgrade) {
-            currentProductionRate *= 1.25; // Apply 25% increase
-        }
-
         const interval = isFastForwardActive ? productionInterval / fastForwardMultiplier : productionInterval;
         productionLoop = setInterval(() => {
-            credits += machineCount * currentProductionRate;
+            let totalCreditsEarned = 0;
+            for (let i = 1; i <= machineCount; i++) {
+                let productionRate = 1;
+                if (machineUpgrades[i].production) {
+                    productionRate *= 1.25; // Apply production bonus
+                }
+                totalCreditsEarned += productionRate;
+            }
+            credits += totalCreditsEarned;
             updateUI();
         }, interval);
     }
@@ -176,31 +176,31 @@ function handlePurchaseMachineButtonClick() {
     }
 }
 
-function handleUpgradeSpeedPanelButtonClick() {
-    if (machineCount > 0 && credits >= speedUpgradeCost && !hasSpeedUpgrade && upgradeSpeedPanelButton) {
-        credits -= speedUpgradeCost;
-        hasSpeedUpgrade = true;
-        productionInterval *= 0.8; // Example speed increase from upgrade
-        startProduction();
+function handleIndividualSpeedUpgrade(event) {
+    const machineId = parseInt(event.target.dataset.machineId);
+    const upgradeCost = Math.round(machineUpgrades[machineId].cost * 1.5);
+    if (credits >= upgradeCost && !machineUpgrades[machineId].speed) {
+        credits -= upgradeCost;
+        machineUpgrades[machineId].speed = true;
+        productionInterval *= 0.8; // Global speed increase for all machines
         updateUI();
     }
 }
 
-function handleUpgradeProductionPanelButtonClick() {
-    if (machineCount > 0 && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
-        credits -= productionUpgradeCost;
-        hasProductionUpgrade = true;
-        startProduction(); // Re-start production to apply the bonus
+function handleIndividualProductionUpgrade(event) {
+    const machineId = parseInt(event.target.dataset.machineId);
+    const upgradeCost = Math.round(machineUpgrades[machineId].cost * 1.5);
+    if (credits >= upgradeCost && !machineUpgrades[machineId].production) {
+        credits -= upgradeCost;
+        machineUpgrades[machineId].production = true;
         updateUI();
+        startProduction(); // Restart production to apply the bonus immediately
     }
 }
 
 // Event listeners
-// We no longer need the buyButton event listener
 if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
 if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
-if (upgradeSpeedPanelButton) upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
-if (upgradeProductionPanelButton) upgradeProductionPanelButton.addEventListener('click', handleUpgradeProductionPanelButtonClick);
 
 // Initial UI update
 updateUI();
