@@ -28,7 +28,7 @@ let additionalMachineCost = 300; // Initial value for the second machine
 let hasSpeedUpgrade = false; // May not be needed
 let hasProductionUpgrade = false; // May not be needed
 let isFastForwardActive = false;
-const fastForwardMultiplier = 2; // How much faster the game runs
+const fastForwardMultiplier = 500; // How much faster the game runs
 const machineUpgrades = {}; // Object to store upgrades for each machine
 
 function updateUI() {
