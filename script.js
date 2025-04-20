@@ -21,14 +21,14 @@ let machineCount = 0; // Track the number of machines
 let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
-const firstMachineCost = 100;
-const additionalMachineCost = 75; // Cost for subsequent machines
+let firstMachineCost = 100; // Price of the first machine is now 100
+let additionalMachineCost = 75; // Initial value, will be updated
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 25; // How much faster the game runs
+const fastForwardMultiplier = 102; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -102,6 +102,7 @@ function buyFirstMachine() {
         credits -= firstMachineCost;
         machinePurchased = true;
         machineCount++;
+        additionalMachineCost = firstMachineCost * 3; // Set the price for the next machine
         startProduction();
         updateUI();
     }
@@ -111,6 +112,7 @@ function buyAdditionalMachine() {
     if (machinePurchased && credits >= additionalMachineCost) {
         credits -= additionalMachineCost;
         machineCount++;
+        additionalMachineCost *= 3; // Increase the price for the next machine
         updateUI(); // Re-render the machines
     }
 }
@@ -174,4 +176,27 @@ function handleUpgradeSpeedPanelButtonClick() {
     if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade && upgradeSpeedPanelButton) {
         credits -= speedUpgradeCost;
         hasSpeedUpgrade = true;
-        productionInterval *= 0.8; // Example speed increase from
+        productionInterval *= 0.8; // Example speed increase from upgrade
+        startProduction();
+        updateUI();
+    }
+}
+
+function handleUpgradeProductionPanelButtonClick() {
+    if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
+        credits -= productionUpgradeCost;
+        hasProductionUpgrade = true;
+        // Example production increase - for now, just visual
+        updateUI();
+    }
+}
+
+// Event listeners
+if (buyButton) buyButton.addEventListener('click', buyFirstMachine); // Keep this for the initial purchase in the main content
+if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
+if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
+if (upgradeSpeedPanelButton) upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
+if (upgradeProductionPanelButton) upgradeProductionPanelButton.addEventListener('click', handleUpgradeProductionPanelButtonClick);
+
+// Initial UI update
+updateUI();
