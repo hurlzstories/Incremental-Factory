@@ -1,15 +1,46 @@
 body {
     font-family: sans-serif;
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: flex-start; /* Align content to the top */
+    display: flex; /* Keep flex to position aside and container */
+    justify-content: center; /* Center container horizontally */
+    align-items: flex-start; /* Align items to the top */
     min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
     padding-top: 30px; /* Space for fixed title */
 }
 
-/* ... the rest of your CSS remains the same ... */
+aside#upgrade-panel {
+    position: fixed;
+    top: 60px; /* Below the fixed title */
+    left: 10px; /* Distance from the left edge */
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 20; /* Higher than other elements */
+    text-align: center;
+}
+
+aside#upgrade-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+aside#upgrade-panel button {
+    margin: 10px 0;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eee;
+}
+
+aside#upgrade-panel button:hover {
+    background-color: #ddd;
+}
+
 .container {
     background-color: #fff;
     padding: 30px;
@@ -19,6 +50,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally in the column */
+    margin-left: 150px; /* Push container to the right to make space for panel */
 }
 
 h1 {
@@ -34,106 +66,7 @@ h1 {
     text-align: center;
 }
 
-#machine-container {
-    margin-top: 80px; /* Adjust to avoid overlap with fixed title */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.machine-outline {
-    width: 120px; /* Wider to accommodate icons */
-    height: 120px;
-    border: 1px solid #333;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.top-section {
-    display: flex;
-    align-items: center; /* Align shape and icons vertically */
-    width: 100%;
-    justify-content: center; /* Center the shape initially */
-    margin-bottom: 10px;
-}
-
-.shape-indicator {
-    width: 30px;
-    height: 30px;
-    background-color: #333;
-    /* margin-right: 10px; Removed initial right margin */
-}
-
-.upgrade-icons {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* Push icons to the right */
-}
-
-.triangle-icon {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red; /* Example red color */
-    margin-right: 5px; /* Space between icons */
-    /* Initially hidden */
-    display: none;
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue; /* Example blue color */
-    /* Initially hidden */
-    display: none;
-}
-
-.buy-button {
-    background-color: #ddd;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.buy-button:hover {
-    background-color: #ccc;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    text-align: center;
-    border-radius: 8px;
-}
-
-.modal-content button {
-    margin: 10px;
-}
+/* ... the rest of your CSS ... */
 
 .hidden {
     display: none !important;
