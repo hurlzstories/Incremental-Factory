@@ -20,7 +20,7 @@ let machineCount = 0; // Track the number of machines
 let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
-const firstMachineCost = 50;
+const firstMachineCost = 100;
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
