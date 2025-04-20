@@ -125,17 +125,14 @@ function renderMachines() {
         const machineOutline = document.createElement('div');
         machineOutline.classList.add('machine-outline');
 
-        // Conditionally create top section and shape indicator for machines *after* the first
-        if (i > 0) {
-            const topSectionDiv = document.createElement('div');
-            topSectionDiv.classList.add('top-section');
+        const topSectionDiv = document.createElement('div');
+        topSectionDiv.classList.add('top-section');
 
-            const shapeDiv = document.createElement('div');
-            shapeDiv.classList.add('shape-indicator');
+        const shapeDiv = document.createElement('div');
+        shapeDiv.classList.add('shape-indicator');
 
-            topSectionDiv.appendChild(shapeDiv);
-            machineOutline.appendChild(topSectionDiv);
-        }
+        topSectionDiv.appendChild(shapeDiv);
+        machineOutline.appendChild(topSectionDiv);
 
         const machineLabel = document.createElement('div');
         machineLabel.classList.add('machine-label');
