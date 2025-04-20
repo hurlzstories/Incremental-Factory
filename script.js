@@ -26,48 +26,55 @@ let isFastForwardActive = false;
 const fastForwardMultiplier = 2; // How much faster the game runs
 
 function updateUI() {
+    if (!creditsDisplay) return;
     creditsDisplay.textContent = `Credits: ${credits}`;
 
     if (machinePurchased) {
-        buyButton.style.display = 'none';
-        shapeIndicator.style.display = 'block';
-        machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
+        if (buyButton) buyButton.style.display = 'none';
+        if (shapeIndicator) shapeIndicator.style.display = 'block';
+        if (machine1Info) machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
     } else {
-        buyButton.style.display = 'block';
-        buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
-        shapeIndicator.style.display = 'none';
-        machine1Info.style.display = 'none'; // Hide initially
+        if (buyButton) {
+            buyButton.style.display = 'block';
+            buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
+        }
+        if (shapeIndicator) shapeIndicator.style.display = 'none';
+        if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
     }
 
-    triangleIcon.style.display = hasSpeedUpgrade ? 'block' : 'none';
-    circleIcon.style.display = hasProductionUpgrade ? 'block' : 'none';
-    topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
+    if (triangleIcon) triangleIcon.style.display = hasSpeedUpgrade ? 'block' : 'none';
+    if (circleIcon) circleIcon.style.display = hasProductionUpgrade ? 'block' : 'none';
+    if (topSection) topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
 
-    if (hasSpeedUpgrade) {
-        speedUpgradeStatus.textContent = 'Speed Upgraded';
-        upgradeSpeedPanelButton.className = 'speed-upgraded'; // Set class directly
-        upgradeSpeedPanelButton.textContent = ''; // Clear button text
-        upgradeSpeedPanelButton.disabled = true;
-    } else {
-        speedUpgradeStatus.textContent = '';
-        upgradeSpeedPanelButton.className = ''; // Clear class
-        upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
-        upgradeSpeedPanelButton.disabled = !machinePurchased || credits < speedUpgradeCost;
+    if (upgradeSpeedPanelButton) {
+        if (hasSpeedUpgrade) {
+            if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
+            upgradeSpeedPanelButton.className = 'speed-upgraded'; // Set class directly
+            upgradeSpeedPanelButton.textContent = ''; // Clear button text
+            upgradeSpeedPanelButton.disabled = true;
+        } else {
+            if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
+            upgradeSpeedPanelButton.className = ''; // Clear class
+            upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
+            upgradeSpeedPanelButton.disabled = !machinePurchased || credits < speedUpgradeCost;
+        }
     }
 
-    if (hasProductionUpgrade) {
-        productionUpgradeStatus.textContent = 'Production Upgraded';
-        upgradeProductionPanelButton.className = 'production-upgraded'; // Set class directly
-        upgradeProductionPanelButton.textContent = ''; // Clear button text
-        upgradeProductionPanelButton.disabled = true;
-    } else {
-        productionUpgradeStatus.textContent = '';
-        upgradeProductionPanelButton.className = ''; // Clear class
-        upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
-        upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
+    if (upgradeProductionPanelButton) {
+        if (hasProductionUpgrade) {
+            if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
+            upgradeProductionPanelButton.className = 'production-upgraded'; // Set class directly
+            upgradeProductionPanelButton.textContent = ''; // Clear button text
+            upgradeProductionPanelButton.disabled = true;
+        } else {
+            if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
+            upgradeProductionPanelButton.className = ''; // Clear class
+            upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
+            upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
+        }
     }
 
-    fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
+    if (fastForwardButtonFixed) fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
 }
 
 function buyFirstMachine() {
@@ -103,7 +110,7 @@ function handlePurchaseMachineButtonClick() {
 }
 
 function handleUpgradeSpeedPanelButtonClick() {
-    if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade) {
+    if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade && upgradeSpeedPanelButton) {
         credits -= speedUpgradeCost;
         hasSpeedUpgrade = true;
         productionInterval *= 0.8; // Example speed increase from upgrade
@@ -113,7 +120,7 @@ function handleUpgradeSpeedPanelButtonClick() {
 }
 
 function handleUpgradeProductionPanelButtonClick() {
-    if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade) {
+    if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
         credits -= productionUpgradeCost;
         hasProductionUpgrade = true;
         // Example production increase - for now, just visual
@@ -122,11 +129,11 @@ function handleUpgradeProductionPanelButtonClick() {
 }
 
 // Event listeners
-buyButton.addEventListener('click', buyFirstMachine);
-fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
-purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
-upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
-upgradeProductionPanelButton.addEventListener('click', handleUpgradeProductionPanelButtonClick);
+if (buyButton) buyButton.addEventListener('click', buyFirstMachine);
+if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
+if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
+if (upgradeSpeedPanelButton) upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
+if (upgradeProductionPanelButton) upgradeProductionPanelButton.addEventListener('click', handleUpgradeProductionPanelButtonClick);
 
 // Initial UI update
 updateUI();
