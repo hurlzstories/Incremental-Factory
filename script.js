@@ -22,6 +22,7 @@ let hasFirstFabricator = false;
 let firstUpgradeChosen = null; // 'speed' or 'production'
 let upgradeMenuVisible = false; // Track if the upgrade menu is open (will be used later)
 let upgradeCost = 25; // Initial cost of the first upgrade
+let gamePaused = false; // New state variable to pause the game
 
 // Function to update the UI
 function updateUI() {
@@ -57,6 +58,7 @@ function updateUI() {
     // Show the upgrade choice modal after the first fabricator is bought
     if (fabricatorCount > 0 && !hasFirstFabricator && firstUpgradeChosen === null) {
         upgradeChoiceModal.style.display = 'block';
+        gamePaused = true; // Pause the game
         hasFirstFabricator = true;
     } else {
         upgradeChoiceModal.style.display = 'none';
@@ -68,7 +70,6 @@ function buyFabricator() {
     if (credits >= fabricatorCost) {
         credits -= fabricatorCost;
         fabricatorCount++;
-        fabricatorCost *= 2; // Double the cost for the next one
         updateUI();
     }
 }
@@ -76,12 +77,14 @@ function buyFabricator() {
 // Function to handle choosing the speed upgrade
 function chooseSpeedUpgrade() {
     firstUpgradeChosen = 'speed';
+    gamePaused = false; // Unpause the game
     updateUI(); // Hide the modal and show the upgrade button
 }
 
 // Function to handle choosing the production upgrade
 function chooseProductionUpgrade() {
     firstUpgradeChosen = 'production';
+    gamePaused = false; // Unpause the game
     updateUI(); // Hide the modal and show the upgrade button
 }
 
@@ -101,7 +104,7 @@ function toggleFastForward() {
     isFastForwarding = !isFastForwarding;
     clearInterval(productionLoop); // Clear the existing interval
 
-    if (isFastForwarding) {
+    if (isFastForwarding && !gamePaused) {
         productionLoop = setInterval(() => {
             let currentProduction = fabricatorCount;
             if (firstUpgradeChosen === 'production') {
@@ -112,7 +115,7 @@ function toggleFastForward() {
             credits += currentProduction * fastForwardMultiplier;
             updateUI();
         }, productionInterval / fastForwardMultiplier); // Run much faster
-    } else {
+    } else if (!isFastForwarding && !gamePaused) {
         productionLoop = setInterval(() => {
             let currentProduction = fabricatorCount;
             if (firstUpgradeChosen === 'production') {
@@ -139,12 +142,14 @@ updateUI();
 
 // Initial production loop
 productionLoop = setInterval(() => {
-    let currentProduction = fabricatorCount;
-    if (firstUpgradeChosen === 'production') {
-        currentProduction *= 1.5; // Apply 0.5x quantity buff
-    } else if (firstUpgradeChosen === 'speed') {
-        // We'll implement the speed increase by reducing the interval
+    if (!gamePaused) {
+        let currentProduction = fabricatorCount;
+        if (firstUpgradeChosen === 'production') {
+            currentProduction *= 1.5; // Apply 0.5x quantity buff
+        } else if (firstUpgradeChosen === 'speed') {
+            // We'll implement the speed increase by reducing the interval
+        }
+        credits += currentProduction;
+        updateUI();
     }
-    credits += currentProduction;
-    updateUI();
 }, productionInterval);
