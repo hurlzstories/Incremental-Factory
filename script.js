@@ -22,13 +22,13 @@ let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
 let firstMachineCost = 100; // Price of the first machine is now 100
-let additionalMachineCost = 75; // Initial value, will be updated
+let additionalMachineCost = 300; // Initial value for the second machine
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 102; // How much faster the game runs
+const fastForwardMultiplier = 100; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -150,9 +150,16 @@ function renderMachines() {
 function startProduction() {
     clearInterval(productionLoop); // Clear any existing interval
     if (machinePurchased) {
+        const baseProductionRate = 1; // Default credits per machine per interval
+        let currentProductionRate = baseProductionRate;
+
+        if (hasProductionUpgrade) {
+            currentProductionRate *= 1.25; // Apply 25% increase
+        }
+
         const interval = isFastForwardActive ? productionInterval / fastForwardMultiplier : productionInterval;
         productionLoop = setInterval(() => {
-            credits += machineCount; // Credits per second per machine
+            credits += machineCount * currentProductionRate;
             updateUI();
         }, interval);
     }
@@ -186,7 +193,7 @@ function handleUpgradeProductionPanelButtonClick() {
     if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
         credits -= productionUpgradeCost;
         hasProductionUpgrade = true;
-        // Example production increase - for now, just visual
+        startProduction(); // Re-start production to apply the bonus
         updateUI();
     }
 }
