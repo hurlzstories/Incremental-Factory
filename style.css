@@ -30,6 +30,7 @@ header h1 {
 
 header #credits {
     font-size: 1.1em;
+    color: #333; /* Add a dark text color */
 }
 
 aside#side-panel {
