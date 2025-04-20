@@ -8,12 +8,18 @@ const topSection = document.querySelector('.top-section');
 const purchaseMachineButton = document.getElementById('purchase-machine-button');
 const upgradeSpeedPanelButton = document.getElementById('upgrade-speed-panel-button');
 const upgradeProductionPanelButton = document.getElementById('upgrade-production-panel-button');
+const machine1Info = document.getElementById('machine-1-info'); // Reference to machine info in sidebar
 
 let credits = 100;
-let machinePurchased = false;
+let machineCount = 0; // Track the number of machines
+let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // 1 credit per second per machine
 let productionLoop;
 const firstMachineCost = 50;
+const speedUpgradeCost = 100; // Example cost
+const productionUpgradeCost = 150; // Example cost
+let hasSpeedUpgrade = false;
+let hasProductionUpgrade = false;
 
 function updateUI() {
     creditsDisplay.textContent = `Credits: ${credits}`;
@@ -21,19 +27,30 @@ function updateUI() {
     if (machinePurchased) {
         buyButton.style.display = 'none';
         shapeIndicator.style.display = 'block';
+        machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
     } else {
         buyButton.style.display = 'block';
         buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
         shapeIndicator.style.display = 'none';
+        machine1Info.style.display = 'none'; // Hide initially
     }
 
-    // Upgrade icon visibility will be handled later
+    triangleIcon.style.display = hasSpeedUpgrade ? 'block' : 'none';
+    circleIcon.style.display = hasProductionUpgrade ? 'block' : 'none';
+    topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
+
+    upgradeSpeedPanelButton.textContent = hasSpeedUpgrade ? 'Speed Upgraded' : `Speed Upgrade (Cost: ${speedUpgradeCost})`;
+    upgradeSpeedPanelButton.disabled = hasSpeedUpgrade || credits < speedUpgradeCost || !machinePurchased;
+
+    upgradeProductionPanelButton.textContent = hasProductionUpgrade ? 'Production Upgraded' : `Production Upgrade (Cost: ${productionUpgradeCost})`;
+    upgradeProductionPanelButton.disabled = hasProductionUpgrade || credits < productionUpgradeCost || !machinePurchased;
 }
 
 function buyFirstMachine() {
     if (credits >= firstMachineCost && !machinePurchased) {
         credits -= firstMachineCost;
         machinePurchased = true;
+        machineCount++;
         startProduction();
         updateUI();
     }
@@ -42,7 +59,7 @@ function buyFirstMachine() {
 function startProduction() {
     if (machinePurchased) {
         productionLoop = setInterval(() => {
-            credits++;
+            credits += machineCount; // Credits per second per machine
             updateUI();
         }, productionInterval);
     }
@@ -59,13 +76,23 @@ function handlePurchaseMachineButtonClick() {
 }
 
 function handleUpgradeSpeedPanelButtonClick() {
-    console.log("Speed Upgrade button (panel) clicked!");
-    // Logic to purchase speed upgrade
+    if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade) {
+        credits -= speedUpgradeCost;
+        hasSpeedUpgrade = true;
+        productionInterval *= 0.8; // Example speed increase
+        clearInterval(productionLoop);
+        startProduction();
+        updateUI();
+    }
 }
 
 function handleUpgradeProductionPanelButtonClick() {
-    console.log("Production Upgrade button (panel) clicked!");
-    // Logic to purchase production upgrade
+    if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade) {
+        credits -= productionUpgradeCost;
+        hasProductionUpgrade = true;
+        // Example production increase - for now, just visual
+        updateUI();
+    }
 }
 
 // Event listeners
