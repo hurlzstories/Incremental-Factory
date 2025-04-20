@@ -1,53 +1,21 @@
-body {
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    margin: 0;
-}
+/* Existing CSS */
 
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column; /* Arrange elements vertically */
-    align-items: center;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #eee;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #ddd;
-}
+/* ... modal styles ... */
 
 #fabricator-list {
     margin-top: 20px;
     display: flex;
     flex-direction: column; /* Arrange bars vertically */
-    align-items: center; /* Center the squares within the bars */
+    align-items: flex-start; /* Align items to the start to see icons */
 }
 
 .fabricator-bar {
-    width: 50px;
+    width: 70px; /* Make the bar wider to accommodate icons */
     height: 20px;
     background-color: #ddd;
     border: 1px solid #ccc;
     margin-bottom: 5px;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -55,4 +23,34 @@ button:hover {
     width: 10px;
     height: 10px;
     background-color: #333; /* Solid square color */
+    margin-left: 5px;
+}
+
+.upgrade-icon {
+    width: 10px;
+    height: 10px;
+    margin-left: 5px;
+}
+
+.triangle-icon {
+    /* Simple triangle using borders */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid green; /* Example color */
+}
+
+.circle-icon {
+    border-radius: 50%;
+    background-color: blue; /* Example color */
+}
+
+.hidden {
+    display: none !important;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
