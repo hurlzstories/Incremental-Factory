@@ -6,6 +6,9 @@ const shapeIndicator = document.querySelector('.shape-indicator');
 const triangleIcon = document.querySelector('.triangle-icon');
 const circleIcon = document.querySelector('.circle-icon');
 const topSection = document.querySelector('.top-section');
+const purchaseMachineButton = document.getElementById('purchase-machine-button');
+const upgradeSpeedPanelButton = document.getElementById('upgrade-speed-panel-button');
+const upgradeProductionPanelButton = document.getElementById('upgrade-production-panel-button');
 
 let credits = 100;
 let machinePurchased = false;
@@ -48,7 +51,7 @@ function startProduction() {
 
 function handleUpgradeButtonClick() {
     console.log("Upgrades button clicked!");
-    // We'll add the upgrade panel logic here later
+    // We'll add logic to show upgrade options in the side panel later
 }
 
 function handleFastForwardButtonClick() {
@@ -56,10 +59,28 @@ function handleFastForwardButtonClick() {
     // We'll add the fast forward logic here later
 }
 
+function handlePurchaseMachineButtonClick() {
+    console.log("Purchase Machine button clicked!");
+    // Logic to purchase additional machines will go here
+}
+
+function handleUpgradeSpeedPanelButtonClick() {
+    console.log("Speed Upgrade button (panel) clicked!");
+    // Logic to purchase speed upgrade
+}
+
+function handleUpgradeProductionPanelButtonClick() {
+    console.log("Production Upgrade button (panel) clicked!");
+    // Logic to purchase production upgrade
+}
+
 // Event listeners
 buyButton.addEventListener('click', buyFirstMachine);
 upgradeButtonFixed.addEventListener('click', handleUpgradeButtonClick);
 fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
+purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
+upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
+upgradeProductionPanelButton.addEventListener('click', handleUpgradeProductionPanelButtonClick);
 
 // Initial UI update
 updateUI();
