@@ -177,7 +177,7 @@ aside#side-panel button#fast-forward-button-fixed {
 .main-content {
     display: flex; /* Use flexbox layout */
     justify-content: center; /* Center items horizontally */
-    align-items: flex-start; /* Align items to the top */
+    align-items: center; /* Center items vertically */
     margin-left: 200px; /* Space for side panel */
     padding: 20px;
     gap: 20px; /* Spacing between machines */
