@@ -11,7 +11,7 @@ body {
 
 aside#upgrade-panel {
     position: fixed;
-    top: 60px; /* Below the fixed title */
+    top: 50px; /* Adjusted to be below the title */
     left: 10px; /* Distance from the left edge */
     background-color: #fefefe;
     padding: 20px;
@@ -66,7 +66,80 @@ h1 {
     text-align: center;
 }
 
-/* ... the rest of your CSS ... */
+#machine-container {
+    margin-top: 80px; /* Adjust to avoid overlap with fixed title */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.machine-outline {
+    width: 120px; /* Wider to accommodate icons */
+    height: 120px;
+    border: 1px solid #333;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.top-section {
+    display: flex;
+    align-items: center; /* Align shape and icons vertically */
+    width: 100%;
+    justify-content: center; /* Center the shape initially */
+    margin-bottom: 10px;
+}
+
+.shape-indicator {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    /* margin-right: 10px; Removed initial right margin */
+}
+
+.upgrade-icons {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Push icons to the right */
+}
+
+.triangle-icon {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid red; /* Example red color */
+    margin-right: 5px; /* Space between icons */
+    /* Initially hidden */
+    display: none;
+}
+
+.circle-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: blue; /* Example blue color */
+    /* Initially hidden */
+    display: none;
+}
+
+.buy-button {
+    background-color: #ddd;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.buy-button:hover {
+    background-color: #ccc;
+}
 
 .hidden {
     display: none !important;
