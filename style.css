@@ -10,51 +10,50 @@ body {
 
 .container {
     background-color: #fff;
-    padding: 30px; /* More padding */
-    border-radius: 10px; /* Slightly more rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    padding: 30px; /* Reasonable padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center; /* Center text within elements */
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally in the column */
-    width: 80%; /* Take up more width */
-    max-width: 600px; /* Set a maximum width */
+    /* Let the content determine the width and height initially */
 }
 
 h1 {
-    font-size: 2em; /* Larger title */
-    margin-bottom: 15px;
+    font-size: 1.8em;
+    margin-bottom: 10px;
 }
 
 #factory-representation {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px; /* More space below the machine */
+    margin-bottom: 15px;
 }
 
 .factory-outline {
-    width: 80px; /* Larger outline */
-    height: 80px; /* Larger outline */
-    border: 2px solid #333; /* Thicker outline */
+    width: 60px; /* Moderate size outline */
+    height: 60px; /* Moderate size outline */
+    border: 1px solid #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px; /* More space between outline and button */
+    margin-bottom: 8px;
 }
 
 .factory-icon {
-    width: 40px; /* Larger solid square */
-    height: 40px; /* Larger solid square */
+    width: 30px; /* Moderate size solid square */
+    height: 30px; /* Moderate size solid square */
     background-color: #333;
 }
 
 button {
-    padding: 10px 20px; /* Larger button */
-    font-size: 1.2em; /* Larger font */
+    padding: 8px 16px; /* Moderate button size */
+    font-size: 1em;
     cursor: pointer;
-    border: 2px solid #333; /* Thicker border */
-    border-radius: 6px; /* More rounded corners */
+    border: 1px solid #333;
+    border-radius: 4px;
     background-color: #eee;
     margin-top: 0;
 }
