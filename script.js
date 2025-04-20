@@ -1,4 +1,4 @@
-const buyButton = document.querySelector('.buy-button');
+const buyButton = document.querySelector('.buy-button'); // We might not need this reference anymore
 const creditsDisplay = document.getElementById('credits');
 const fastForwardButtonFixed = document.getElementById('fast-forward-button-fixed');
 const shapeIndicator = document.querySelector('.shape-indicator');
@@ -21,7 +21,7 @@ let machineCount = 0; // Track the number of machines
 let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
-let firstMachineCost = 100; // Price of the first machine is now 100
+let firstMachineCost = 100; // Price of the first machine
 let additionalMachineCost = 300; // Initial value for the second machine
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
@@ -34,8 +34,7 @@ function updateUI() {
     if (!creditsDisplay) return;
     creditsDisplay.textContent = `Credits: ${credits}`;
 
-    if (machinePurchased) {
-        if (buyButton) buyButton.style.display = 'none';
+    if (machineCount > 0) {
         if (shapeIndicator) shapeIndicator.style.display = 'block';
         if (machine1Info) machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
         if (purchaseMachineButton) {
@@ -43,13 +42,12 @@ function updateUI() {
             purchaseMachineButton.style.display = 'block';
         }
     } else {
-        if (buyButton) {
-            buyButton.style.display = 'block';
-            buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
-        }
-        if (purchaseMachineButton) purchaseMachineButton.style.display = 'none';
         if (shapeIndicator) shapeIndicator.style.display = 'none';
         if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
+        if (purchaseMachineButton) {
+            purchaseMachineButton.textContent = `Buy First Machine (Cost: ${firstMachineCost})`;
+            purchaseMachineButton.style.display = 'block';
+        }
     }
 
     // Show upgrade icons in the machine info ONLY if the upgrade is purchased
@@ -65,7 +63,7 @@ function updateUI() {
             if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
         } else {
             upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
-            upgradeSpeedPanelButton.disabled = !machinePurchased || credits < speedUpgradeCost;
+            upgradeSpeedPanelButton.disabled = machineCount === 0 || credits < speedUpgradeCost;
             upgradeSpeedPanelButton.style.display = 'block';
             if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
         }
@@ -78,7 +76,7 @@ function updateUI() {
             if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
         } else {
             upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
-            upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
+            upgradeProductionPanelButton.disabled = machineCount === 0 || credits < productionUpgradeCost;
             upgradeProductionPanelButton.style.display = 'block';
             if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
         }
@@ -98,9 +96,8 @@ function updateUI() {
 }
 
 function buyFirstMachine() {
-    if (credits >= firstMachineCost && !machinePurchased) {
+    if (credits >= firstMachineCost) {
         credits -= firstMachineCost;
-        machinePurchased = true;
         machineCount++;
         additionalMachineCost = firstMachineCost * 3; // Set the price for the next machine
         startProduction();
@@ -109,7 +106,7 @@ function buyFirstMachine() {
 }
 
 function buyAdditionalMachine() {
-    if (machinePurchased && credits >= additionalMachineCost) {
+    if (credits >= additionalMachineCost) {
         credits -= additionalMachineCost;
         machineCount++;
         additionalMachineCost *= 3; // Increase the price for the next machine
@@ -144,12 +141,17 @@ function renderMachines() {
         machineContainer.appendChild(machineOutline);
         machineContainer.appendChild(machineLabel);
         mainContent.appendChild(machineContainer);
+
+        // Directly hide the shape indicator for the first machine
+        if (i === 0 && shapeIndicator) {
+            shapeIndicator.style.display = 'none';
+        }
     }
 }
 
 function startProduction() {
     clearInterval(productionLoop); // Clear any existing interval
-    if (machinePurchased) {
+    if (machineCount > 0) {
         const baseProductionRate = 1; // Default credits per machine per interval
         let currentProductionRate = baseProductionRate;
 
@@ -172,7 +174,7 @@ function handleFastForwardButtonClick() {
 }
 
 function handlePurchaseMachineButtonClick() {
-    if (!machinePurchased) {
+    if (machineCount === 0) {
         buyFirstMachine();
     } else {
         buyAdditionalMachine();
@@ -180,7 +182,7 @@ function handlePurchaseMachineButtonClick() {
 }
 
 function handleUpgradeSpeedPanelButtonClick() {
-    if (machinePurchased && credits >= speedUpgradeCost && !hasSpeedUpgrade && upgradeSpeedPanelButton) {
+    if (machineCount > 0 && credits >= speedUpgradeCost && !hasSpeedUpgrade && upgradeSpeedPanelButton) {
         credits -= speedUpgradeCost;
         hasSpeedUpgrade = true;
         productionInterval *= 0.8; // Example speed increase from upgrade
@@ -190,7 +192,7 @@ function handleUpgradeSpeedPanelButtonClick() {
 }
 
 function handleUpgradeProductionPanelButtonClick() {
-    if (machinePurchased && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
+    if (machineCount > 0 && credits >= productionUpgradeCost && !hasProductionUpgrade && upgradeProductionPanelButton) {
         credits -= productionUpgradeCost;
         hasProductionUpgrade = true;
         startProduction(); // Re-start production to apply the bonus
@@ -199,7 +201,7 @@ function handleUpgradeProductionPanelButtonClick() {
 }
 
 // Event listeners
-if (buyButton) buyButton.addEventListener('click', buyFirstMachine); // Keep this for the initial purchase in the main content
+// We no longer need the buyButton event listener
 if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
 if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
 if (upgradeSpeedPanelButton) upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
