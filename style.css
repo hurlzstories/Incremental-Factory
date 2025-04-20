@@ -75,7 +75,7 @@ aside#side-panel .machine-info {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
-    display: none; /* Hide the initial machine info */
+    display: none !important; /* Force hide the initial machine info */
 }
 
 aside#side-panel .machine-info h3 {
@@ -211,4 +211,84 @@ aside#side-panel button#fast-forward-button-fixed {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content:
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.top-section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.shape-indicator {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+}
+
+.upgrade-icons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.triangle-icon {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid red;
+    margin-right: 5px;
+    display: none;
+}
+
+.circle-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: blue;
+    display: none;
+}
+
+.buy-button {
+    background-color: #ddd;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.buy-button:hover {
+    background-color: #ccc;
+}
+
+.upgrades-container {
+    margin-bottom: 15px; /* Add some space below the upgrade sections */
+}
+
+.machine-upgrade-section {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.machine-upgrade-section h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.machine-upgrade-section button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    text-align: left; /* Align text in upgrade buttons to the left */
+}
