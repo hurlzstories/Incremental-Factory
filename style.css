@@ -15,20 +15,65 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
-    flex-direction: column; /* Arrange elements vertically */
+    flex-direction: column;
     align-items: center;
 }
 
 h1 {
-    margin-bottom: 15px; /* Add some space below the title */
+    margin-bottom: 15px;
 }
 
 #game-grid {
     display: grid;
-    grid-template-columns: 50px 50px; /* 2 columns */
-    grid-gap: 10px; /* Space between grid items */
-    margin-top: 10px; /* Adjust top margin if needed */
-    margin-bottom: 20px; /* Add space below the grid */
+    grid-template-columns: 50px; /* 1 column */
+    grid-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
-/* ... rest of your CSS ... */
+.grid-item {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.factory-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.modal-content button {
+    margin: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
