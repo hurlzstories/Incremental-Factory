@@ -41,35 +41,66 @@ h1 {
 }
 
 .machine-outline {
-    width: 80px; /* Size of the machine box */
-    height: 120px; /* Height to accommodate top and bottom sections */
-    border: 1px solid #333; /* Thin black border */
-    position: relative; /* For positioning inner elements */
+    width: 120px; /* Wider to accommodate icons */
+    height: 120px;
+    border: 1px solid #333;
+    position: relative;
     display: flex;
-    flex-direction: column; /* Stack shape and button vertically */
-    justify-content: space-between; /* Space out shape and button */
-    align-items: center; /* Center shape and button horizontally */
-    padding: 10px; /* Some internal padding */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.top-section {
+    display: flex;
+    align-items: center; /* Align shape and icons horizontally */
+    width: 100%; /* Take full width of the top section */
+    justify-content: flex-start; /* Align items to the left */
+    margin-bottom: 10px; /* Space between top section and button */
 }
 
 .shape-indicator {
-    width: 30px; /* Size of the black square */
+    width: 30px;
     height: 30px;
     background-color: #333;
-    /* Position in the upper third */
-    margin-top: 10px; /* Adjust as needed */
+    margin-right: 10px; /* Space between shape and icons */
+}
+
+.upgrade-icons {
+    display: flex;
+    align-items: center;
+}
+
+.triangle-icon {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 15px solid red; /* Example red color */
+    margin-right: 5px; /* Space between icons */
+    /* Initially hidden */
+    display: none;
+}
+
+.circle-icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: blue; /* Example blue color */
+    /* Initially hidden */
+    display: none;
 }
 
 .buy-button {
-    background-color: #ddd; /* Grey background */
-    color: #333; /* Black text */
-    border: 1px solid #ccc; /* Light grey border */
+    background-color: #ddd;
+    color: #333;
+    border: 1px solid #ccc;
     padding: 8px 16px;
     font-size: 1em;
     cursor: pointer;
     border-radius: 4px;
-    /* Position in the bottom third */
-    margin-bottom: 10px; /* Adjust as needed */
+    margin-bottom: 10px;
 }
 
 .buy-button:hover {
