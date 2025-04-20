@@ -11,6 +11,9 @@ const upgradeProductionPanelButton = document.getElementById('upgrade-production
 const machine1Info = document.getElementById('machine-1-info'); // Reference to machine info in sidebar
 const speedUpgradeStatus = document.getElementById('speed-upgrade-status');
 const productionUpgradeStatus = document.getElementById('production-upgrade-status');
+const sidePanel = document.getElementById('side-panel');
+const speedIndicator = document.querySelector('.speed-indicator');
+const productionIndicator = document.querySelector('.production-indicator');
 
 let credits = 100;
 let machineCount = 0; // Track the number of machines
@@ -42,36 +45,41 @@ function updateUI() {
         if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
     }
 
-    if (triangleIcon) triangleIcon.style.display = hasSpeedUpgrade ? 'block' : 'none';
-    if (circleIcon) circleIcon.style.display = hasProductionUpgrade ? 'block' : 'none';
+    // Show upgrade icons in the machine info
+    if (speedIndicator) speedIndicator.style.display = hasSpeedUpgrade ? 'inline-block' : 'none';
+    if (productionIndicator) productionIndicator.style.display = hasProductionUpgrade ? 'inline-block' : 'none';
+
     if (topSection) topSection.justifyContent = (hasSpeedUpgrade || hasProductionUpgrade) ? 'flex-start' : 'center';
 
     if (upgradeSpeedPanelButton) {
         if (hasSpeedUpgrade) {
             if (speedUpgradeStatus) speedUpgradeStatus.textContent = 'Speed Upgraded';
-            upgradeSpeedPanelButton.className = 'speed-upgraded'; // Set class directly
-            upgradeSpeedPanelButton.textContent = ''; // Clear button text
-            upgradeSpeedPanelButton.disabled = true;
+            upgradeSpeedPanelButton.style.display = 'none'; // Hide the button
         } else {
             if (speedUpgradeStatus) speedUpgradeStatus.textContent = '';
-            upgradeSpeedPanelButton.className = ''; // Clear class
             upgradeSpeedPanelButton.textContent = `Speed Upgrade (Cost: ${speedUpgradeCost})`;
             upgradeSpeedPanelButton.disabled = !machinePurchased || credits < speedUpgradeCost;
+            upgradeSpeedPanelButton.style.display = 'block'; // Show the button
         }
     }
 
     if (upgradeProductionPanelButton) {
         if (hasProductionUpgrade) {
             if (productionUpgradeStatus) productionUpgradeStatus.textContent = 'Production Upgraded';
-            upgradeProductionPanelButton.className = 'production-upgraded'; // Set class directly
-            upgradeProductionPanelButton.textContent = ''; // Clear button text
-            upgradeProductionPanelButton.disabled = true;
+            upgradeProductionPanelButton.style.display = 'none'; // Hide the button
         } else {
             if (productionUpgradeStatus) productionUpgradeStatus.textContent = '';
-            upgradeProductionPanelButton.className = ''; // Clear class
             upgradeProductionPanelButton.textContent = `Production Upgrade (Cost: ${productionUpgradeCost})`;
             upgradeProductionPanelButton.disabled = !machinePurchased || credits < productionUpgradeCost;
+            upgradeProductionPanelButton.style.display = 'block'; // Show the button
         }
+    }
+
+    // Hide upgrade section if both are bought
+    if (hasSpeedUpgrade && hasProductionUpgrade && sidePanel) {
+        sidePanel.classList.add('upgrades-complete');
+    } else if (sidePanel) {
+        sidePanel.classList.remove('upgrades-complete');
     }
 
     if (fastForwardButtonFixed) fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
