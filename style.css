@@ -1,14 +1,12 @@
 body {
     font-family: sans-serif;
-    display: flex;
-    flex-direction: column; /* Stack title, container, fixed buttons */
-    justify-content: flex-start; /* Align items to the top */
-    align-items: center; /* Center horizontally */
+    display: flex; /* Use flexbox to position the panel and container */
+    justify-content: center; /* Center the container horizontally */
+    align-items: flex-start; /* Align items to the top */
     min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
     padding-top: 30px; /* Space for fixed title */
-    position: relative; /* For positioning fixed buttons */
 }
 
 h1 {
@@ -24,6 +22,41 @@ h1 {
     text-align: center;
 }
 
+aside#side-panel {
+    position: fixed;
+    top: 60px; /* Below the fixed title */
+    left: 10px;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 15; /* Below the fixed right buttons */
+    text-align: center;
+    width: 180px; /* Adjust width as needed */
+}
+
+aside#side-panel h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+aside#side-panel button {
+    margin: 5px 0;
+    padding: 8px 12px;
+    font-size: 1em;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eee;
+    width: 100%; /* Make buttons fill the panel width */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+aside#side-panel button:hover {
+    background-color: #ddd;
+}
+
 .container {
     background-color: #fff;
     padding: 30px;
@@ -33,7 +66,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* margin-left: 150px; Removed left margin */
+    margin-left: 200px; /* Adjust to make space for the side panel */
 }
 
 #machine-container {
@@ -43,74 +76,7 @@ h1 {
     align-items: center;
 }
 
-.machine-outline {
-    width: 120px;
-    height: 120px;
-    border: 1px solid #333;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-
-.top-section {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.shape-indicator {
-    width: 30px;
-    height: 30px;
-    background-color: #333;
-}
-
-.upgrade-icons {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-
-.triangle-icon {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 15px solid red;
-    margin-right: 5px;
-    display: none;
-}
-
-.circle-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: blue;
-    display: none;
-}
-
-.buy-button {
-    background-color: #ddd;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 8px 16px;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-.buy-button:hover {
-    background-color: #ccc;
-}
-
-#credits {
-    margin-top: 20px;
-}
+/* ... the rest of your CSS ... */
 
 .fixed-button {
     position: fixed;
@@ -121,13 +87,13 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #eee;
-    z-index: 15; /* Above other content */
+    z-index: 15; /* Above side panel */
 }
 
 #upgrade-button-fixed {
-    top: 80px; /* Adjust vertical position */
+    top: 80px;
 }
 
 #fast-forward-button-fixed {
-    top: 130px; /* Below upgrade button */
+    top: 130px;
 }
