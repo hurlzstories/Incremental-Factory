@@ -14,19 +14,21 @@ const productionUpgradeStatus = document.getElementById('production-upgrade-stat
 const sidePanel = document.getElementById('side-panel');
 const speedIndicator = document.querySelector('.speed-indicator');
 const productionIndicator = document.querySelector('.production-indicator');
+const mainContent = document.querySelector('.main-content'); // Get the main content area
 
 let credits = 100;
 let machineCount = 0; // Track the number of machines
 let machinePurchased = false; // For the first machine
 let productionInterval = 1000; // Default: 1 credit per second per machine
 let productionLoop;
-const firstMachineCost = 100; // Updated initial cost
+const firstMachineCost = 50;
+const additionalMachineCost = 75; // Cost for subsequent machines
 const speedUpgradeCost = 100; // Example cost
 const productionUpgradeCost = 150; // Example cost
 let hasSpeedUpgrade = false;
 let hasProductionUpgrade = false;
 let isFastForwardActive = false;
-const fastForwardMultiplier = 5; // How much faster the game runs
+const fastForwardMultiplier = 2; // How much faster the game runs
 
 function updateUI() {
     if (!creditsDisplay) return;
@@ -36,11 +38,16 @@ function updateUI() {
         if (buyButton) buyButton.style.display = 'none';
         if (shapeIndicator) shapeIndicator.style.display = 'block';
         if (machine1Info) machine1Info.style.display = 'block'; // Show machine info in sidebar after purchase
+        if (purchaseMachineButton) {
+            purchaseMachineButton.textContent = `Buy Another Machine (Cost: ${additionalMachineCost})`;
+            purchaseMachineButton.style.display = 'block';
+        }
     } else {
         if (buyButton) {
             buyButton.style.display = 'block';
             buyButton.textContent = `BUY (Cost: ${firstMachineCost})`;
         }
+        if (purchaseMachineButton) purchaseMachineButton.style.display = 'none';
         if (shapeIndicator) shapeIndicator.style.display = 'none';
         if (machine1Info) machine1Info.style.display = 'none'; // Hide initially
     }
@@ -85,6 +92,9 @@ function updateUI() {
     }
 
     if (fastForwardButtonFixed) fastForwardButtonFixed.textContent = `Fast Forward (${isFastForwardActive ? 'On' : 'Off'})`;
+
+    // Render the machines in the main content area
+    renderMachines();
 }
 
 function buyFirstMachine() {
@@ -94,6 +104,44 @@ function buyFirstMachine() {
         machineCount++;
         startProduction();
         updateUI();
+    }
+}
+
+function buyAdditionalMachine() {
+    if (machinePurchased && credits >= additionalMachineCost) {
+        credits -= additionalMachineCost;
+        machineCount++;
+        updateUI(); // Re-render the machines
+    }
+}
+
+function renderMachines() {
+    if (!mainContent) return;
+    mainContent.innerHTML = ''; // Clear existing machines
+    for (let i = 0; i < machineCount; i++) {
+        const machineContainer = document.createElement('div');
+        machineContainer.classList.add('machine-container');
+        machineContainer.id = `machine-${i + 1}`; // Unique ID for each machine
+
+        const machineOutline = document.createElement('div');
+        machineOutline.classList.add('machine-outline');
+
+        const topSectionDiv = document.createElement('div');
+        topSectionDiv.classList.add('top-section');
+
+        const shapeDiv = document.createElement('div');
+        shapeDiv.classList.add('shape-indicator');
+
+        topSectionDiv.appendChild(shapeDiv);
+        machineOutline.appendChild(topSectionDiv);
+
+        const machineLabel = document.createElement('div');
+        machineLabel.classList.add('machine-label');
+        machineLabel.textContent = `Machine ${i + 1}`;
+
+        machineContainer.appendChild(machineOutline);
+        machineContainer.appendChild(machineLabel);
+        mainContent.appendChild(machineContainer);
     }
 }
 
@@ -115,8 +163,11 @@ function handleFastForwardButtonClick() {
 }
 
 function handlePurchaseMachineButtonClick() {
-    console.log("Purchase Machine button clicked!");
-    // Logic to purchase additional machines will go here
+    if (!machinePurchased) {
+        buyFirstMachine();
+    } else {
+        buyAdditionalMachine();
+    }
 }
 
 function handleUpgradeSpeedPanelButtonClick() {
@@ -139,7 +190,7 @@ function handleUpgradeProductionPanelButtonClick() {
 }
 
 // Event listeners
-if (buyButton) buyButton.addEventListener('click', buyFirstMachine);
+if (buyButton) buyButton.addEventListener('click', buyFirstMachine); // Keep this for the initial purchase in the main content
 if (fastForwardButtonFixed) fastForwardButtonFixed.addEventListener('click', handleFastForwardButtonClick);
 if (purchaseMachineButton) purchaseMachineButton.addEventListener('click', handlePurchaseMachineButtonClick);
 if (upgradeSpeedPanelButton) upgradeSpeedPanelButton.addEventListener('click', handleUpgradeSpeedPanelButtonClick);
