@@ -2,11 +2,11 @@ body {
     font-family: sans-serif;
     display: flex;
     justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    min-height: 100vh; /* Make body take full viewport height */
+    align-items: flex-start; /* Align content to the top initially */
+    min-height: 100vh;
     background-color: #f0f0f0;
     margin: 0;
-    padding-top: 30px; /* Add padding to the top to prevent overlap */
+    padding-top: 30px; /* Space for fixed title */
 }
 
 .container {
@@ -18,58 +18,62 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center items horizontally in the column */
-    /* Let the content determine the width and height initially */
 }
 
 h1 {
     font-size: 1.8em;
-    margin-bottom: 10px;
-    position: fixed; /* Fix the position */
-    top: 0; /* Stick to the top */
-    left: 0; /* Stick to the left edge */
-    width: 100%; /* Take full width */
-    background-color: #fff; /* Ensure background color */
-    padding: 10px 0; /* Add some padding above and below */
-    z-index: 10; /* Ensure it's above other elements */
-    text-align: center; /* Center the text within the fixed bar */
+    margin-bottom: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 0;
+    z-index: 10;
+    text-align: center;
 }
 
-#factory-representation {
+#machine-container {
+    margin-top: 80px; /* Adjust to avoid overlap with fixed title */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 60px; /* Add top margin to avoid overlap with fixed title */
-    margin-bottom: 15px;
 }
 
-.factory-outline {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #333;
+.machine-outline {
+    width: 80px; /* Size of the machine box */
+    height: 120px; /* Height to accommodate top and bottom sections */
+    border: 1px solid #333; /* Thin black border */
+    position: relative; /* For positioning inner elements */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 8px;
+    flex-direction: column; /* Stack shape and button vertically */
+    justify-content: space-between; /* Space out shape and button */
+    align-items: center; /* Center shape and button horizontally */
+    padding: 10px; /* Some internal padding */
 }
 
-.factory-icon {
-    width: 30px;
+.shape-indicator {
+    width: 30px; /* Size of the black square */
     height: 30px;
     background-color: #333;
+    /* Position in the upper third */
+    margin-top: 10px; /* Adjust as needed */
 }
 
-button {
+.buy-button {
+    background-color: #ddd; /* Grey background */
+    color: #333; /* Black text */
+    border: 1px solid #ccc; /* Light grey border */
     padding: 8px 16px;
     font-size: 1em;
     cursor: pointer;
-    border: 1px solid #333;
     border-radius: 4px;
-    background-color: #eee;
-    margin-top: 0;
+    /* Position in the bottom third */
+    margin-bottom: 10px; /* Adjust as needed */
 }
 
-button:hover {
-    background-color: #ddd;
+.buy-button:hover {
+    background-color: #ccc;
 }
 
 .modal {
